@@ -106,7 +106,7 @@ class Year:
         self.update()
 
     def addSpecialDay(self, specialDay):
-        self.specialDays[specialDay.name] = specialDay
+        self.specialDays[specialDay._name] = specialDay
 
     def update(self):
         self.easter = getEaster(self.yh, self.year)
@@ -127,12 +127,12 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Holy Saturday",        day=self.easter, offset=  -1)) # Infotage
         self.addSpecialDay(SpecialDay(name="Easter Sunday",        day=self.easter))              # Infotage
         self.addSpecialDay(SpecialDay(name="Easter Monday",        day=self.easter, offset=   1)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="White Sunday"  ,       day=self.easter, offset=   7)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Fathers day" ,         day=self.easter, offset=  39)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Ascension of Christ" , day=self.easter, offset=  39)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Pentecost Sunday" ,    day=self.easter, offset=  49)) # Infotage
+        self.addSpecialDay(SpecialDay(name="White Sunday",         day=self.easter, offset=   7)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Fathers day",          day=self.easter, offset=  39)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Ascension of Christ",  day=self.easter, offset=  39)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Pentecost Sunday",     day=self.easter, offset=  49)) # Infotage
         self.addSpecialDay(SpecialDay(name="Whit Monday",          day=self.easter, offset=  50)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Corpus Christi" ,      day=self.easter, offset=  60)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Corpus Christi",       day=self.easter, offset=  60)) # Feiertage
 
         self.addSpecialDay(SpecialDay(name="Memorial Day (de)", day=self.ref1, offset=-14, incToWeekDay=1)) # Infotage - am zweiten Sonntag vor dem 1. Adventssonntag
         self.addSpecialDay(SpecialDay(name="1 Advent",          day=self.ref1, incToWeekDay=1))            # Infotage - liegt zwischen dem 27. November und dem 3. Dezember
@@ -168,17 +168,17 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Construction of the wall 1961", day=13, mon=10, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="Reformation Day 1517",          day=31, mon=10, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="All Saints Day",                day= 1, mon=11, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="All Souls Day" ,                day= 2, mon=11, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="All Souls Day",                 day= 2, mon=11, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="October Revolution 1917",       day= 7, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="9. November (Germany)" ,        day= 9, mon=11, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="9. November (Germany)",         day= 9, mon=11, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="St. Nicholas Day",              day= 6, mon=12, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="Mary Conception",               day= 8, mon=12, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="Martin's Day" ,                 day=11, mon=11, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="Winter solstice",               day=22, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name= "Christmas eve" ,               day=24, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Christmas eve" ,                day=24, mon=12, yh=self.yh, year=self.year)) # Infotage
         self.addSpecialDay(SpecialDay(name="First christmasday",            day=25, mon=12, yh=self.yh, year=self.year)) # Feiertage
         self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name= "New Year's Eve",               day=31, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="New Year's Eve",                day=31, mon=12, yh=self.yh, year=self.year)) # Infotage
 
         # days to add
         # UK https://de.wikipedia.org/wiki/Boxing_Day
@@ -200,6 +200,9 @@ class Day:
         self.mon  = mon  # month of the year
         self.yh   = yh   # year hundred
         self.year = year # year - the last 2 digits
+
+    def __str__(self):
+        return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year}'
 
     def increment(self, daysToAdd):
         daysOfMonth = self.daysOfMonth
@@ -297,7 +300,18 @@ class SpecialDay(Day):
         
         if not incToWeekDay == -1:
             self.incToWeekDay(incToWeekDay)
-        
+
+    def __str__(self):
+        return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year} - {self.name}'
+
+    @property
+    def name(self):
+        return(TRANSLATE_US_DE[self._name])
+
+    @name.setter
+    def name(self, name):
+        self._name = name
+
 
 def getEaster(jh, year):
 

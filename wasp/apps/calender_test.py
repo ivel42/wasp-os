@@ -42,5 +42,8 @@ def main():
 
     year = Year(20,21)
 
+    for key, value in year.specialDays.items():
+        print(key + ' | ' + str(value))
+
 if __name__ == '__main__':
     main()
