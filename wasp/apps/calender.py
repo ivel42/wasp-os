@@ -66,6 +66,7 @@ TRANSLATE_US_DE = {
     "New Year"                      : {"name" : "Neujahr"                  , "type":SpecialDayType.HOLIDAY  } ,  
     "Holy three kings"              : {"name" : "Hl. Drei Könige"          , "type":SpecialDayType.HOLIDAY  } ,  
     "Valentine's day"               : {"name" : "Valentinstag"             , "type":SpecialDayType.INFO_DAY } ,  
+    "Women's Day"                   : {"name" : "Frauentag"                , "type":SpecialDayType.INFO_DAY } ,  
     "Day of the beer"               : {"name" : "Tag des Bieres"           , "type":SpecialDayType.INFO_DAY } ,  
     "Labor Day (de)"                : {"name" : "Tag der Arbeit (de)"      , "type":SpecialDayType.HOLIDAY  } ,  
     "Europe day"                    : {"name" : "Europatag"                , "type":SpecialDayType.INFO_DAY } ,  
@@ -74,7 +75,9 @@ TRANSLATE_US_DE = {
     "Popular uprising DDR 1953"     : {"name" : "Volksaufstand DDR 1953"   , "type":SpecialDayType.INFO_DAY } ,  
     "Attack 1944"                   : {"name" : "Attentat 1944"            , "type":SpecialDayType.INFO_DAY } ,  
     "Summer solstice"               : {"name" : "Sommersonnenwende"        , "type":SpecialDayType.INFO_DAY } ,  
+    "Peace Festival Augsburg"       : {"name" : "Friedensfest Augsburg"    , "type":SpecialDayType.INFO_DAY } ,  
     "Assumption Day"                : {"name" : "Mariä Himmelfahrt"        , "type":SpecialDayType.INFO_DAY } ,  
+    "Children's Day"                : {"name" : "Kindertag"                , "type":SpecialDayType.INFO_DAY } ,  
     "Begin WW2 1939"                : {"name" : "Kriegsbeginn 2. WK 1939"  , "type":SpecialDayType.INFO_DAY } ,  
     "Day of German unity"           : {"name" : "Tag der Deutschen Einheit", "type":SpecialDayType.HOLIDAY  } ,  
     "Hiroshima 1945"                : {"name" : "Hiroshima 1945"           , "type":SpecialDayType.INFO_DAY } ,  
@@ -144,7 +147,7 @@ class Year:
         
         self.addSpecialDay(SpecialDay(name="Thanksgiving (de)", day=self.ref4, incToWeekDay=1)) 
 
-        self.addSpecialDay(SpecialDay(name="Buß- und Bettag",   day=self.ref3, offset=7, incToWeekDay=4)) 
+        self.addSpecialDay(SpecialDay(name="Buß- und Bettag",   day=self.ref3, offset=-7, incToWeekDay=4)) 
         
         self.addSpecialDay(SpecialDay(name="Summertime (eu)",   day=self.ref5, offset= -7, incToWeekDay=1))
         self.addSpecialDay(SpecialDay(name="Normaltime (eu)",   day=self.ref6, offset= -7, incToWeekDay=1)) 
@@ -153,6 +156,7 @@ class Year:
         self.addSpecialDay(SpecialDay(name="New Year",                      day= 1, mon= 1, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Women's Day",                   day= 8, mon= 3, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, yh=self.yh, year=self.year)) 
@@ -161,7 +165,9 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Peace Festival Augsburg",       day= 8, mon= 8, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Children's Day",                day=20, mon= 9, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, yh=self.yh, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, yh=self.yh, year=self.year)) 
