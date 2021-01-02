@@ -45,5 +45,8 @@ def main():
     for key, value in year.specialDays.items():
         print(key + ' | ' + str(value))
 
+
+    print(year.isSpecialDay(2,1))
+
 if __name__ == '__main__':
     main()

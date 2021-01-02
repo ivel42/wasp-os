@@ -32,68 +32,68 @@ DAYS_PER_MONTH = { 1: 31,
                   12: 31}
 
 class SpecialDayType():
+    IGNORE   = 0
     INFO_DAY = 1
     HOLIDAY  = 2
 
-
 TRANSLATE_US_DE = {
-    "Women's Shrovetide"            : "Weiberfastnacht"           ,                               
-    "Carnival Monday"               : "Rosenmontag"               ,           
-    "Shrove Tuesday"                : "Faschingsdienstag"         ,                 
-    "Ash Wednesday"                 : "Aschermittwoch"            ,              
-    "Palm Sunday"                   : "Palmsonntag"               ,           
-    "Maundy Thursday"               : "Gründonnerstag"            ,              
-    "Good Friday"                   : "Karfreitag"                ,          
-    "Holy Saturday"                 : "Karsamstag"                ,          
-    "Easter Sunday"                 : "Oster-Sonntag"             ,             
-    "Easter Monday"                 : "Oster-Montag"              ,            
-    "White Sunday"                  : "Weißer Sonntag"            ,              
-    "Fathers day"                   : "Vatertag"                  ,        
-    "Ascension of Christ"           : "Christi Himmelfahrt"       ,                   
-    "Pentecost Sunday"              : "Pfingstsonntag"            ,              
-    "Whit Monday"                   : "Pfingstmontag"             ,             
-    "Corpus Christi"                : "Fronleichnam"              ,            
-    "Memorial Day (de)"             : "Volkstrauertag (de)"       ,                   
-    "1 Advent"                      : "1. Advent"                 ,         
-    "2 Advent"                      : "2. Advent"                 ,         
-    "3 Advent"                      : "3. Advent"                 ,         
-    "4 Advent"                      : "4. Advent"                 ,         
-    "Mother's Day"                  : "Muttertag"                 ,         
-    "Thanksgiving (de)"             : "Erntedank"                 ,         
-    "Buß- und Bettag"               : "Buß- und Bettag"           ,               
-    "Summertime (eu)"               : "Sommerzeit"                ,          
-    "Normaltime (eu)"               : "Normalzeit"                ,          
-    "New Year"                      : "Neujahr"                   ,       
-    "Holy three kings"              : "Hl. Drei Könige"           ,               
-    "Valentine's day"               : "Valentinstag"              ,            
-    "Day of the beer"               : "Tag des Bieres"            ,              
-    "Labor Day (de)"                : "Tag der Arbeit (de)"       ,                   
-    "Europe day"                    : "Europatag"                 ,         
-    "Victory in Europe"             : "Kriegsende 2. WK 1945"     ,                     
-    "Constitution (de)"             : "Grundgesetz (de)"          ,                
-    "Popular uprising DDR 1953"     : "Volksaufstand DDR 1953"    ,                      
-    "Attack 1944"                   : "Attentat 1944"             ,             
-    "Summer solstice"               : "Sommersonnenwende"         ,                 
-    "Assumption Day"                : "Mariä Himmelfahrt"         ,                 
-    "Begin WW2 1939"                : "Kriegsbeginn 2. WK 1939"   ,                       
-    "Day of German unity"           : "Tag der Deutschen Einheit" ,                         
-    "Hiroshima 1945"                : "Hiroshima 1945"            ,              
-    "Construction of the wall 1961" : "Mauerbau 1961"             ,             
-    "Reformation Day 1517"          : "Reformationstag 1517"      ,                    
-    "All Saints Day"                : "Allerheiligen"             ,             
-    "All Souls Day"                 : "Allerseelen"               ,             
-    "October Revolution 1917"       : "Oktoberrevolution 1917"    ,                      
-    "9. November (Germany)"         : "9. November (Deutschland)" ,                         
-    "St. Nicholas Day"              : "Nikolaus"                  ,        
-    "Mary Conception"               : "Maria Empfängnis"          ,                
-    "Martin's Day"                  : "Martinstag"                ,          
-    "Winter solstice"               : "Wintersonnenwende"         ,                 
-    "Christmas eve"                 : "Heiligabend"               ,           
-    "First christmasday"            : "Erster Weihnachtstag"      ,                    
-    "Second christmasday"           : "Zweiter Weihnachtstag"     ,                     
-    "New Year's Eve"                : "Silvester"                 ,                           
+    "Women's Shrovetide"            : {"name" : "Weiberfastnacht"          , "type":SpecialDayType.INFO_DAY } ,       
+    "Carnival Monday"               : {"name" : "Rosenmontag"              , "type":SpecialDayType.INFO_DAY } , 
+    "Shrove Tuesday"                : {"name" : "Faschingsdienstag"        , "type":SpecialDayType.INFO_DAY } , 
+    "Ash Wednesday"                 : {"name" : "Aschermittwoch"           , "type":SpecialDayType.INFO_DAY } , 
+    "Palm Sunday"                   : {"name" : "Palmsonntag"              , "type":SpecialDayType.INFO_DAY } , 
+    "Maundy Thursday"               : {"name" : "Gründonnerstag"           , "type":SpecialDayType.INFO_DAY } , 
+    "Good Friday"                   : {"name" : "Karfreitag"               , "type":SpecialDayType.HOLIDAY  } , 
+    "Holy Saturday"                 : {"name" : "Karsamstag"               , "type":SpecialDayType.INFO_DAY } , 
+    "Easter Sunday"                 : {"name" : "Oster-Sonntag"            , "type":SpecialDayType.INFO_DAY } , 
+    "Easter Monday"                 : {"name" : "Oster-Montag"             , "type":SpecialDayType.HOLIDAY  } , 
+    "White Sunday"                  : {"name" : "Weißer Sonntag"           , "type":SpecialDayType.INFO_DAY } , 
+    "Fathers day"                   : {"name" : "Vatertag"                 , "type":SpecialDayType.INFO_DAY } , 
+    "Ascension of Christ"           : {"name" : "Christi Himmelfahrt"      , "type":SpecialDayType.HOLIDAY  } , 
+    "Pentecost Sunday"              : {"name" : "Pfingstsonntag"           , "type":SpecialDayType.INFO_DAY } , 
+    "Whit Monday"                   : {"name" : "Pfingstmontag"            , "type":SpecialDayType.HOLIDAY  } , 
+    "Corpus Christi"                : {"name" : "Fronleichnam"             , "type":SpecialDayType.HOLIDAY  } , 
+    "Memorial Day (de)"             : {"name" : "Volkstrauertag (de)"      , "type":SpecialDayType.INFO_DAY } ,           
+    "1 Advent"                      : {"name" : "1. Advent"                , "type":SpecialDayType.INFO_DAY } ,        
+    "2 Advent"                      : {"name" : "2. Advent"                , "type":SpecialDayType.INFO_DAY } , 
+    "3 Advent"                      : {"name" : "3. Advent"                , "type":SpecialDayType.INFO_DAY } , 
+    "4 Advent"                      : {"name" : "4. Advent"                , "type":SpecialDayType.INFO_DAY } , 
+    "Mother's Day"                  : {"name" : "Muttertag"                , "type":SpecialDayType.INFO_DAY } , 
+    "Thanksgiving (de)"             : {"name" : "Erntedank"                , "type":SpecialDayType.INFO_DAY } , 
+    "Buß- und Bettag"               : {"name" : "Buß- und Bettag"          , "type":SpecialDayType.INFO_DAY } , 
+    "Summertime (eu)"               : {"name" : "Sommerzeit"               , "type":SpecialDayType.INFO_DAY } ,  
+    "Normaltime (eu)"               : {"name" : "Normalzeit"               , "type":SpecialDayType.INFO_DAY } ,    
+    "New Year"                      : {"name" : "Neujahr"                  , "type":SpecialDayType.HOLIDAY  } ,  
+    "Holy three kings"              : {"name" : "Hl. Drei Könige"          , "type":SpecialDayType.HOLIDAY  } ,  
+    "Valentine's day"               : {"name" : "Valentinstag"             , "type":SpecialDayType.INFO_DAY } ,  
+    "Day of the beer"               : {"name" : "Tag des Bieres"           , "type":SpecialDayType.INFO_DAY } ,  
+    "Labor Day (de)"                : {"name" : "Tag der Arbeit (de)"      , "type":SpecialDayType.HOLIDAY  } ,  
+    "Europe day"                    : {"name" : "Europatag"                , "type":SpecialDayType.INFO_DAY } ,  
+    "Victory in Europe"             : {"name" : "Kriegsende 2. WK 1945"    , "type":SpecialDayType.INFO_DAY } ,  
+    "Constitution (de)"             : {"name" : "Grundgesetz (de)"         , "type":SpecialDayType.INFO_DAY } ,  
+    "Popular uprising DDR 1953"     : {"name" : "Volksaufstand DDR 1953"   , "type":SpecialDayType.INFO_DAY } ,  
+    "Attack 1944"                   : {"name" : "Attentat 1944"            , "type":SpecialDayType.INFO_DAY } ,  
+    "Summer solstice"               : {"name" : "Sommersonnenwende"        , "type":SpecialDayType.INFO_DAY } ,  
+    "Assumption Day"                : {"name" : "Mariä Himmelfahrt"        , "type":SpecialDayType.INFO_DAY } ,  
+    "Begin WW2 1939"                : {"name" : "Kriegsbeginn 2. WK 1939"  , "type":SpecialDayType.INFO_DAY } ,  
+    "Day of German unity"           : {"name" : "Tag der Deutschen Einheit", "type":SpecialDayType.HOLIDAY  } ,  
+    "Hiroshima 1945"                : {"name" : "Hiroshima 1945"           , "type":SpecialDayType.INFO_DAY } ,  
+    "Construction of the wall 1961" : {"name" : "Mauerbau 1961"            , "type":SpecialDayType.INFO_DAY } ,  
+    "Reformation Day 1517"          : {"name" : "Reformationstag 1517"     , "type":SpecialDayType.INFO_DAY } ,  
+    "All Saints Day"                : {"name" : "Allerheiligen"            , "type":SpecialDayType.HOLIDAY  } ,  
+    "All Souls Day"                 : {"name" : "Allerseelen"              , "type":SpecialDayType.INFO_DAY } ,  
+    "October Revolution 1917"       : {"name" : "Oktoberrevolution 1917"   , "type":SpecialDayType.INFO_DAY } ,  
+    "9. November (Germany)"         : {"name" : "9. November (Deutschland)", "type":SpecialDayType.INFO_DAY } ,  
+    "St. Nicholas Day"              : {"name" : "Nikolaus"                 , "type":SpecialDayType.INFO_DAY } ,  
+    "Mary Conception"               : {"name" : "Maria Empfängnis"         , "type":SpecialDayType.INFO_DAY } ,  
+    "Martin's Day"                  : {"name" : "Martinstag"               , "type":SpecialDayType.INFO_DAY } ,  
+    "Winter solstice"               : {"name" : "Wintersonnenwende"        , "type":SpecialDayType.INFO_DAY } ,  
+    "Christmas eve"                 : {"name" : "Heiligabend"              , "type":SpecialDayType.INFO_DAY } ,  
+    "First christmasday"            : {"name" : "Erster Weihnachtstag"     , "type":SpecialDayType.HOLIDAY  } ,  
+    "Second christmasday"           : {"name" : "Zweiter Weihnachtstag"    , "type":SpecialDayType.HOLIDAY  } ,  
+    "New Year's Eve"                : {"name" : "Silvester"                , "type":SpecialDayType.INFO_DAY } ,  
 } 
- 
+
 class Calender():
     """
     """
@@ -117,68 +117,68 @@ class Year:
         self.ref5 = Day( 1,  4, self.yh, self.year) # needed for Sommerzeit
         self.ref6 = Day( 1, 11, self.yh, self.year) # needed for Normalzeit
 
-        self.addSpecialDay(SpecialDay(name="Women's Shrovetide",   day=self.easter, offset= -52)) # Infotage - donnertag vor aschermittwoch
-        self.addSpecialDay(SpecialDay(name="Carnival Monday",      day=self.easter, offset= -48)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Shrove Tuesday",       day=self.easter, offset= -47)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Ash Wednesday",        day=self.easter, offset= -46)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Palm Sunday",          day=self.easter, offset=  -7)) # Infotage - Sonntag vor Ostern
-        self.addSpecialDay(SpecialDay(name="Maundy Thursday",      day=self.easter, offset=  -3)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Good Friday",          day=self.easter, offset=  -2)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Holy Saturday",        day=self.easter, offset=  -1)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Easter Sunday",        day=self.easter))              # Infotage
-        self.addSpecialDay(SpecialDay(name="Easter Monday",        day=self.easter, offset=   1)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="White Sunday",         day=self.easter, offset=   7)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Fathers day",          day=self.easter, offset=  39)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Ascension of Christ",  day=self.easter, offset=  39)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Pentecost Sunday",     day=self.easter, offset=  49)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Whit Monday",          day=self.easter, offset=  50)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Corpus Christi",       day=self.easter, offset=  60)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Women's Shrovetide",   day=self.easter, offset= -52))
+        self.addSpecialDay(SpecialDay(name="Carnival Monday",      day=self.easter, offset= -48)) 
+        self.addSpecialDay(SpecialDay(name="Shrove Tuesday",       day=self.easter, offset= -47)) 
+        self.addSpecialDay(SpecialDay(name="Ash Wednesday",        day=self.easter, offset= -46)) 
+        self.addSpecialDay(SpecialDay(name="Palm Sunday",          day=self.easter, offset=  -7))
+        self.addSpecialDay(SpecialDay(name="Maundy Thursday",      day=self.easter, offset=  -3)) 
+        self.addSpecialDay(SpecialDay(name="Good Friday",          day=self.easter, offset=  -2)) 
+        self.addSpecialDay(SpecialDay(name="Holy Saturday",        day=self.easter, offset=  -1)) 
+        self.addSpecialDay(SpecialDay(name="Easter Sunday",        day=self.easter))              
+        self.addSpecialDay(SpecialDay(name="Easter Monday",        day=self.easter, offset=   1)) 
+        self.addSpecialDay(SpecialDay(name="White Sunday",         day=self.easter, offset=   7)) 
+        self.addSpecialDay(SpecialDay(name="Fathers day",          day=self.easter, offset=  39)) 
+        self.addSpecialDay(SpecialDay(name="Ascension of Christ",  day=self.easter, offset=  39)) 
+        self.addSpecialDay(SpecialDay(name="Pentecost Sunday",     day=self.easter, offset=  49)) 
+        self.addSpecialDay(SpecialDay(name="Whit Monday",          day=self.easter, offset=  50)) 
+        self.addSpecialDay(SpecialDay(name="Corpus Christi",       day=self.easter, offset=  60)) 
 
-        self.addSpecialDay(SpecialDay(name="Memorial Day (de)", day=self.ref1, offset=-14, incToWeekDay=1)) # Infotage - am zweiten Sonntag vor dem 1. Adventssonntag
-        self.addSpecialDay(SpecialDay(name="1 Advent",          day=self.ref1, incToWeekDay=1))            # Infotage - liegt zwischen dem 27. November und dem 3. Dezember
-        self.addSpecialDay(SpecialDay(name="2 Advent",          day=self.ref1, offset=7, incToWeekDay=1))  # Infotage
-        self.addSpecialDay(SpecialDay(name="3 Advent",          day=self.ref1, offset=14, incToWeekDay=1)) # Infotage
-        self.addSpecialDay(SpecialDay(name="4 Advent",          day=self.ref1, offset=21, incToWeekDay=1)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Memorial Day (de)", day=self.ref1, offset=-14, incToWeekDay=1))
+        self.addSpecialDay(SpecialDay(name="1 Advent",          day=self.ref1, incToWeekDay=1))            
+        self.addSpecialDay(SpecialDay(name="2 Advent",          day=self.ref1, offset=7, incToWeekDay=1))  
+        self.addSpecialDay(SpecialDay(name="3 Advent",          day=self.ref1, offset=14, incToWeekDay=1)) 
+        self.addSpecialDay(SpecialDay(name="4 Advent",          day=self.ref1, offset=21, incToWeekDay=1)) 
 
-        self.addSpecialDay(SpecialDay(name="Mother's Day",      day=self.ref2, offset=7, incToWeekDay=1)) # Infotage zweiten Sonntag im Mai statt
+        self.addSpecialDay(SpecialDay(name="Mother's Day",      day=self.ref2, offset=7, incToWeekDay=1)) 
         
-        self.addSpecialDay(SpecialDay(name="Thanksgiving (de)", day=self.ref4, incToWeekDay=1)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Thanksgiving (de)", day=self.ref4, incToWeekDay=1)) 
 
-        self.addSpecialDay(SpecialDay(name="Buß- und Bettag",   day=self.ref3, offset=7, incToWeekDay=4)) # Infotage Mittwoch vor dem 23. November
+        self.addSpecialDay(SpecialDay(name="Buß- und Bettag",   day=self.ref3, offset=7, incToWeekDay=4)) 
         
-        self.addSpecialDay(SpecialDay(name="Summertime (eu)",   day=self.ref5, offset= -7, incToWeekDay=1)) # Infotage letzter sonntag im märz
-        self.addSpecialDay(SpecialDay(name="Normaltime (eu)",   day=self.ref6, offset= -7, incToWeekDay=1)) # Infotage letzter sonntag im oktober
+        self.addSpecialDay(SpecialDay(name="Summertime (eu)",   day=self.ref5, offset= -7, incToWeekDay=1))
+        self.addSpecialDay(SpecialDay(name="Normaltime (eu)",   day=self.ref6, offset= -7, incToWeekDay=1)) 
 
         
-        self.addSpecialDay(SpecialDay(name="New Year",                      day= 1, mon= 1, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Victory in Europe",             day= 8, mon= 5, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Constitution (de)",             day=23, mon= 5, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Construction of the wall 1961", day=13, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Reformation Day 1517",          day=31, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="All Saints Day",                day= 1, mon=11, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="All Souls Day",                 day= 2, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="October Revolution 1917",       day= 7, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="9. November (Germany)",         day= 9, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="St. Nicholas Day",              day= 6, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Mary Conception",               day= 8, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Martin's Day" ,                 day=11, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Winter solstice",               day=22, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="Christmas eve" ,                day=24, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.addSpecialDay(SpecialDay(name="First christmasday",            day=25, mon=12, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, yh=self.yh, year=self.year)) # Feiertage
-        self.addSpecialDay(SpecialDay(name="New Year's Eve",                day=31, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="New Year",                      day= 1, mon= 1, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Victory in Europe",             day= 8, mon= 5, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Constitution (de)",             day=23, mon= 5, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Construction of the wall 1961", day=13, mon=10, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Reformation Day 1517",          day=31, mon=10, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="All Saints Day",                day= 1, mon=11, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="All Souls Day",                 day= 2, mon=11, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="October Revolution 1917",       day= 7, mon=11, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="9. November (Germany)",         day= 9, mon=11, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="St. Nicholas Day",              day= 6, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Mary Conception",               day= 8, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Martin's Day" ,                 day=11, mon=11, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Winter solstice",               day=22, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Christmas eve" ,                day=24, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="First christmasday",            day=25, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="New Year's Eve",                day=31, mon=12, yh=self.yh, year=self.year)) 
 
         # days to add
         # UK https://de.wikipedia.org/wiki/Boxing_Day
@@ -191,6 +191,13 @@ class Year:
         # US Veterans Day - November 11 (Fixed)
         # US Thanksgiving Day - November 22–28 (Floating Thursday)
 
+
+    def isSpecialDay(self, day, mon):
+        for key, sDay in self.specialDays.items():
+            if sDay.day == day and sDay.mon == mon:
+                return sDay
+        else:
+            return False
 
 class Day:
     """
@@ -280,9 +287,6 @@ class Day:
             #printf("aktW: %i, gesW: %i -> %i tage addiern\n",aktWoTag,sWoTag,7-aktWoTag+sWoTag);
 
 
-    def isSpecialDay(self):
-        pass
-
 class SpecialDay(Day):
     def __init__(self, day=1, mon=1, yh=0, year=0, name='', offset=0, incToWeekDay=-1):
 
@@ -302,16 +306,27 @@ class SpecialDay(Day):
             self.incToWeekDay(incToWeekDay)
 
     def __str__(self):
-        return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year} - {self.name}'
+        dtype = ''
+        if self.type == SpecialDayType.IGNORE:
+            dtype = "ignored"
+        if self.type == SpecialDayType.INFO_DAY:
+            dtype = "info"
+        if self.type == SpecialDayType.HOLIDAY:
+            dtype = "holiday"
+ 
+        return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year} - {self.name} - {dtype}' 
 
     @property
     def name(self):
-        return(TRANSLATE_US_DE[self._name])
+        return(TRANSLATE_US_DE[self._name]['name'])
 
     @name.setter
     def name(self, name):
         self._name = name
 
+    @property
+    def type(self):
+        return(TRANSLATE_US_DE[self._name]['type'])
 
 def getEaster(jh, year):
 
