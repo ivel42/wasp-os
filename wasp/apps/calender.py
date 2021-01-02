@@ -319,6 +319,14 @@ class Day:
         return aktWoTag
 
     @property
+    def weekday(self):
+        return WEEK_DAYS_DE[self.wd]
+
+    @property
+    def weekdayShort(self):
+        return WEEK_DAYS_DE[self.wd][0:2]
+
+    @property
     def daysOfMonth(self):
         return getDaysPerMonth(self.mon, self.yh, self.year)
 
