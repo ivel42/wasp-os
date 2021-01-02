@@ -255,11 +255,11 @@ class Day:
     def __sub__(self, other):
         test = copy.copy(other)
         diff = 0
-        while self > test:
-            test.decrement(1)
-            diff -= 1
         while self < test:
             test.decrement(1)
+            diff -= 1
+        while self > test:
+            test.increment(1)
             diff += 1
         return diff
 
@@ -325,6 +325,14 @@ class Day:
     @property
     def weekdayShort(self):
         return WEEK_DAYS_DE[self.wd][0:2]
+    
+    @property
+    def cw(self):
+        moCw1 = getMoCw1(self.yh, self.year)
+        days = self - moCw1
+        week = int(days / 7) + 1
+        week = week + 52 if (days < 0) else week
+        return week
 
     @property
     def daysOfMonth(self):

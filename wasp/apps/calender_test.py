@@ -15,6 +15,23 @@ LOGGING_LEVELS = {'critical': logging.CRITICAL,
                   'info'    : logging.INFO,
                   'debug'   : logging.DEBUG}
 
+def ckeckCW(day, cw):
+    calCw = day.cw
+    if calCw != cw:
+        logging.error(f'CW is {calCw} but should be {cw} on {day}!')
+    else:
+        logging.info(f'CW is right for {day}!')
+
+
+def ckeckDiff():
+    t1 = Day(27, 11, 20, 20)
+    t2 = Day(27, 11, 20, 21)
+    
+    diff1 = t2 - t1
+    diff2 = t1 - t2
+
+    print(diff1, diff2)
+
 def checkMoCw1(calYear, day, mon, yh, year):
     """
     docstring
@@ -191,6 +208,19 @@ def main():
     checkSpecialDay(year, 26,  3, "Summertime (eu)")
     checkSpecialDay(year, 29, 10, "Normaltime (eu)")
 
+    ckeckCW(Day( 1,  1, 20, 20),  1)
+    ckeckCW(Day( 5,  1, 20, 20),  1)
+    ckeckCW(Day( 6,  1, 20, 20),  2)
+    ckeckCW(Day( 2,  3, 20, 20), 10)
+    ckeckCW(Day(12,  4, 20, 20), 15)
+    ckeckCW(Day(16,  9, 20, 20), 38)
+    ckeckCW(Day(31, 12, 20, 20), 53)
+
+    ckeckCW(Day( 1,  1, 20, 21), 53)
+    ckeckCW(Day( 4,  1, 20, 21),  1)
+    ckeckCW(Day(17,  1, 20, 21),  2)
+    ckeckCW(Day(31,  3, 20, 21), 13)
+    ckeckCW(Day(31, 12, 20, 21), 52)
 
 if __name__ == '__main__':
     main()
