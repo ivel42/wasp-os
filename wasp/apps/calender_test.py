@@ -18,13 +18,23 @@ LOGGING_LEVELS = {'critical': logging.CRITICAL,
 def checkDay(year, day, mon, name ):
 
     tmp = year.isSpecialDay(day,mon)
-    if tmp == False:
+    if len(tmp) == 0:
         logging.error('date not found for ' + name)
     else:
-        if name != tmp._name:
-            logging.error('date found for ' + name + ' but with the name '+tmp._name)
+        notMatchingNames = list()
+        for item in tmp:
+            if name == item._name:
+                logging.info('date found for ' + name)
+                break
+            else:
+                notMatchingNames.append(item._name)
         else:
-            logging.info('date found for ' + name)
+            log = 'date found for ' + name + ' but with the names '
+            for n in notMatchingNames:
+                log += n + ', '
+
+            logging.error(log[0:-2])
+        pass
 
 def main():
     """
@@ -90,7 +100,7 @@ def main():
     checkDay(year,  4,  4, "Easter Sunday")
     checkDay(year,  5,  4, "Easter Monday")
     checkDay(year,  1,  5, "Labor Day (de)")
-    #checkDay(year,  8,  5, "Victory in Europe")
+    checkDay(year,  8,  5, "Victory in Europe")
     checkDay(year, 13,  5, "Fathers day")
     checkDay(year, 23,  5, "Pentecost Sunday")
     checkDay(year, 24,  5, "Whit Monday")

@@ -199,11 +199,12 @@ class Year:
 
 
     def isSpecialDay(self, day, mon):
+        retval = list()
         for key, sDay in self.specialDays.items():
             if sDay.day == day and sDay.mon == mon:
-                return sDay
-        else:
-            return False
+                retval.append(sDay)
+
+        return retval
 
 class Day:
     """
