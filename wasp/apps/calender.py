@@ -81,6 +81,7 @@ TRANSLATE_US_DE = {
     "Construction of the wall 1961" : "Mauerbau 1961"             ,             
     "Reformation Day 1517"          : "Reformationstag 1517"      ,                    
     "All Saints Day"                : "Allerheiligen"             ,             
+    "All Souls Day"                 : "Allerseelen"               ,             
     "October Revolution 1917"       : "Oktoberrevolution 1917"    ,                      
     "9. November (Germany)"         : "9. November (Deutschland)" ,                         
     "St. Nicholas Day"              : "Nikolaus"                  ,        
@@ -101,8 +102,11 @@ class Year:
     def __init__(self, yh, year):
         self.yh   = yh   # year hundred
         self.year = year # year - the last 2 digits
-        self.christianDays = list()
+        self.specialDays = dict()
         self.update()
+
+    def addSpecialDay(self, specialDay):
+        self.specialDays[specialDay.name] = specialDay
 
     def update(self):
         self.easter = getEaster(self.yh, self.year)
@@ -113,68 +117,68 @@ class Year:
         self.ref5 = Day( 1,  4, self.yh, self.year) # needed for Sommerzeit
         self.ref6 = Day( 1, 11, self.yh, self.year) # needed for Normalzeit
 
-        self.christianDays.append(SpecialDay(name="Weiberfastnacht",     day=self.easter, offset= -52)) # Infotage - donnertag vor aschermittwoch
-        self.christianDays.append(SpecialDay(name="Rosenmontag",         day=self.easter, offset= -48)) # Infotage
-        self.christianDays.append(SpecialDay(name="Faschingsdienstag",   day=self.easter, offset= -47)) # Infotage
-        self.christianDays.append(SpecialDay(name="Aschermittwoch",      day=self.easter, offset= -46)) # Infotage
-        self.christianDays.append(SpecialDay(name="Palmsonntag",         day=self.easter, offset=  -7)) # Infotage - Sonntag vor Ostern
-        self.christianDays.append(SpecialDay(name="Gründonnerstag",      day=self.easter, offset=  -3)) # Infotage
-        self.christianDays.append(SpecialDay(name="Karfreitag",          day=self.easter, offset=  -2)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Karsamstag",          day=self.easter, offset=  -1)) # Infotage
-        self.christianDays.append(SpecialDay(name="Oster-Sonntag",       day=self.easter))              # Infotage
-        self.christianDays.append(SpecialDay(name="Oster-Montag",        day=self.easter, offset=   1)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Weißer Sonntag",      day=self.easter, offset=   7)) # Infotage
-        self.christianDays.append(SpecialDay(name="Vatertag",            day=self.easter, offset=  39)) # Infotage
-        self.christianDays.append(SpecialDay(name="Christi Himmelfahrt", day=self.easter, offset=  39)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Pfingstsonntag",      day=self.easter, offset=  49)) # Infotage
-        self.christianDays.append(SpecialDay(name="Pfingstmontag",       day=self.easter, offset=  50)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Fronleichnam",        day=self.easter, offset=  60)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Women's Shrovetide",   day=self.easter, offset= -52)) # Infotage - donnertag vor aschermittwoch
+        self.addSpecialDay(SpecialDay(name="Carnival Monday",      day=self.easter, offset= -48)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Shrove Tuesday",       day=self.easter, offset= -47)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Ash Wednesday",        day=self.easter, offset= -46)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Palm Sunday",          day=self.easter, offset=  -7)) # Infotage - Sonntag vor Ostern
+        self.addSpecialDay(SpecialDay(name="Maundy Thursday",      day=self.easter, offset=  -3)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Good Friday",          day=self.easter, offset=  -2)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Holy Saturday",        day=self.easter, offset=  -1)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Easter Sunday",        day=self.easter))              # Infotage
+        self.addSpecialDay(SpecialDay(name="Easter Monday",        day=self.easter, offset=   1)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="White Sunday"  ,       day=self.easter, offset=   7)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Fathers day" ,         day=self.easter, offset=  39)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Ascension of Christ" , day=self.easter, offset=  39)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Pentecost Sunday" ,    day=self.easter, offset=  49)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Whit Monday",          day=self.easter, offset=  50)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Corpus Christi" ,      day=self.easter, offset=  60)) # Feiertage
 
-        self.christianDays.append(SpecialDay(name="Volkstrauertag", day=self.ref1, offset=-14, incToWeekDay=1)) # Infotage - am zweiten Sonntag vor dem 1. Adventssonntag
-        self.christianDays.append(SpecialDay(name="1. Advent",      day=self.ref1, incToWeekDay=1))            # Infotage - liegt zwischen dem 27. November und dem 3. Dezember
-        self.christianDays.append(SpecialDay(name="2. Advent",      day=self.ref1, offset=7, incToWeekDay=1))  # Infotage
-        self.christianDays.append(SpecialDay(name="3. Advent",      day=self.ref1, offset=14, incToWeekDay=1)) # Infotage
-        self.christianDays.append(SpecialDay(name="4. Advent",      day=self.ref1, offset=21, incToWeekDay=1)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Memorial Day (de)", day=self.ref1, offset=-14, incToWeekDay=1)) # Infotage - am zweiten Sonntag vor dem 1. Adventssonntag
+        self.addSpecialDay(SpecialDay(name="1 Advent",          day=self.ref1, incToWeekDay=1))            # Infotage - liegt zwischen dem 27. November und dem 3. Dezember
+        self.addSpecialDay(SpecialDay(name="2 Advent",          day=self.ref1, offset=7, incToWeekDay=1))  # Infotage
+        self.addSpecialDay(SpecialDay(name="3 Advent",          day=self.ref1, offset=14, incToWeekDay=1)) # Infotage
+        self.addSpecialDay(SpecialDay(name="4 Advent",          day=self.ref1, offset=21, incToWeekDay=1)) # Infotage
 
-        self.christianDays.append(SpecialDay(name="Muttertag", day=self.ref2, offset=7, incToWeekDay=1)) # Infotage zweiten Sonntag im Mai statt
+        self.addSpecialDay(SpecialDay(name="Mother's Day",      day=self.ref2, offset=7, incToWeekDay=1)) # Infotage zweiten Sonntag im Mai statt
         
-        self.christianDays.append(SpecialDay(name="Erntedank", day=self.ref4, incToWeekDay=1)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Thanksgiving (de)", day=self.ref4, incToWeekDay=1)) # Infotage
 
-        self.christianDays.append(SpecialDay(name="Buß- und Bettag", day=self.ref3, offset=7, incToWeekDay=4)) # Infotage Mittwoch vor dem 23. November
+        self.addSpecialDay(SpecialDay(name="Buß- und Bettag",   day=self.ref3, offset=7, incToWeekDay=4)) # Infotage Mittwoch vor dem 23. November
         
-        self.christianDays.append(SpecialDay(name="Sommerzeit", day=self.ref5, offset= -7, incToWeekDay=1)) # Infotage letzter sonntag im märz
-        self.christianDays.append(SpecialDay(name="Normalzeit", day=self.ref6, offset= -7, incToWeekDay=1)) # Infotage letzter sonntag im oktober
+        self.addSpecialDay(SpecialDay(name="Summertime (eu)",   day=self.ref5, offset= -7, incToWeekDay=1)) # Infotage letzter sonntag im märz
+        self.addSpecialDay(SpecialDay(name="Normaltime (eu)",   day=self.ref6, offset= -7, incToWeekDay=1)) # Infotage letzter sonntag im oktober
 
         
-        self.christianDays.append(SpecialDay(name="Neujahr",                   day= 1, mon= 1, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Hl. Drei Könige",           day= 6, mon= 1, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Valentinstag",              day=14, mon= 2, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Tag des Bieres",            day=23, mon= 4, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Tag der Arbeit",            day= 1, mon= 5, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Europatag",                 day= 5, mon= 5, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Kriegsende 2. WK 1945",     day= 8, mon= 5, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Grundgesetz",               day=23, mon= 5, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Volksaufstand DDR 1953",    day=17, mon= 6, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Attentat 1944",             day=20, mon= 7, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Sommersonnenwende",         day=21, mon= 7, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Mariä Himmelfahrt",         day=15, mon= 8, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Kriegsbeginn 2. WK 1939",   day= 1, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Tag der Deutschen Einheit", day= 3, mon=10, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Hiroshima 1945",            day= 6, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Mauerbau 1961",             day=13, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Reformationstag 1517",      day=31, mon=10, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Allerheiligen",             day= 1, mon=11, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Allerseelen",               day= 2, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Oktoberrevolution 1917",    day= 7, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="9. November (Deutschland)", day= 9, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Nikolaus",                  day= 6, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Maria Empfängnis",          day= 8, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Martinstag",                day=11, mon=11, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Wintersonnenwende",         day=22, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Heiligabend",               day=24, mon=12, yh=self.yh, year=self.year)) # Infotage
-        self.christianDays.append(SpecialDay(name="Erster Weihnachtstag",      day=25, mon=12, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Zweiter Weihnachtstag",     day=26, mon=12, yh=self.yh, year=self.year)) # Feiertage
-        self.christianDays.append(SpecialDay(name="Silvester",                 day=31, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="New Year",                      day= 1, mon= 1, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Victory in Europe",             day= 8, mon= 5, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Constitution (de)",             day=23, mon= 5, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Construction of the wall 1961", day=13, mon=10, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Reformation Day 1517",          day=31, mon=10, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="All Saints Day",                day= 1, mon=11, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="All Souls Day" ,                day= 2, mon=11, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="October Revolution 1917",       day= 7, mon=11, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="9. November (Germany)" ,        day= 9, mon=11, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="St. Nicholas Day",              day= 6, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Mary Conception",               day= 8, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Martin's Day" ,                 day=11, mon=11, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="Winter solstice",               day=22, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name= "Christmas eve" ,               day=24, mon=12, yh=self.yh, year=self.year)) # Infotage
+        self.addSpecialDay(SpecialDay(name="First christmasday",            day=25, mon=12, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, yh=self.yh, year=self.year)) # Feiertage
+        self.addSpecialDay(SpecialDay(name= "New Year's Eve",               day=31, mon=12, yh=self.yh, year=self.year)) # Infotage
 
         # days to add
         # UK https://de.wikipedia.org/wiki/Boxing_Day
