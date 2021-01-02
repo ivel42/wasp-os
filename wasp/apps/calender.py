@@ -10,6 +10,7 @@ For calculation the calender formulas of Christian Zeller will be used.
 """
 
 #import wasp
+import copy
 
 WEEK_DAYS_DE = {0: 'Samstag',
                 1: 'Sonntag',
@@ -108,17 +109,22 @@ class Year:
         self.specialDays = dict()
         self.update()
 
+    def __str__(self):
+        return f'{self.yh}{self.year}'
+
     def addSpecialDay(self, specialDay):
         self.specialDays[specialDay._name] = specialDay
 
     def update(self):
         self.easter = getEaster(self.yh, self.year)
+        self.moCw1  = getMoCw1( self.yh, self.year)
         self.ref1 = Day(27, 11, self.yh, self.year) # needed for 1. Advent
         self.ref2 = Day( 1,  5, self.yh, self.year) # needed for Muttertag
         self.ref3 = Day(23, 11, self.yh, self.year) # needed for Buß und Bettag
         self.ref4 = Day( 1, 10, self.yh, self.year) # needed for Erntedank
         self.ref5 = Day( 1,  4, self.yh, self.year) # needed for Sommerzeit
         self.ref6 = Day( 1, 11, self.yh, self.year) # needed for Normalzeit
+
 
         self.addSpecialDay(SpecialDay(name="Women's Shrovetide",   day=self.easter, offset= -52))
         self.addSpecialDay(SpecialDay(name="Carnival Monday",      day=self.easter, offset= -48)) 
@@ -218,6 +224,45 @@ class Day:
     def __str__(self):
         return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year}'
 
+    def __eq__(self, other):
+        if self.day == other.day and self.mon == other.mon and self.yh == other.yh and self.year == other.year:
+            return True
+        else:
+            return False
+            
+    def __lt__(self, other):
+        if self.yh < other.yh:
+            return True
+        if self.yh == other.yh and self.year < other.year:
+            return True
+        if self.yh == other.yh and self.year == other.year and self.mon < other.mon:
+            return True
+        if self.yh == other.yh and self.year == other.year and self.mon == other.mon and self.day < other.day:
+            return True
+        return False
+
+    def __gt__(self, other):
+        if self.yh > other.yh:
+            return True
+        if self.yh == other.yh and self.year > other.year:
+            return True
+        if self.yh == other.yh and self.year == other.year and self.mon > other.mon:
+            return True
+        if self.yh == other.yh and self.year == other.year and self.mon == other.mon and self.day > other.day:
+            return True
+        return False
+
+    def __sub__(self, other):
+        test = copy.copy(other)
+        diff = 0
+        while self > test:
+            test.decrement(1)
+            diff -= 1
+        while self < test:
+            test.decrement(1)
+            diff += 1
+        return diff
+
     def increment(self, daysToAdd):
         daysOfMonth = self.daysOfMonth
         for ii in range(daysToAdd):
@@ -268,7 +313,7 @@ class Day:
         # Weekday calculation after Christian Zeller
         # Sa: 0, So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6
 
-        aktWoTag = (self.day + int(((mon+1)*26)/10) + self.year + int(self.year/4) + int(self.yh/4) - 2*self.yh) % 7
+        aktWoTag = (self.day + int(((mon+1)*26)/10) + year + int(year/4) + int(self.yh/4) - 2*self.yh) % 7
         aktWoTag = aktWoTag + 7 if (aktWoTag < 0) else aktWoTag
         
         return aktWoTag
@@ -354,6 +399,12 @@ def getEaster(jh, year):
     easter.increment(daysAfter21M)
 
     return easter
+
+def getMoCw1(yh, year):
+    tmp = Day( 1,  1, yh, year) # needed for Calender week - ISO 8601
+    tmp.incToWeekDay(5) # Thursday is always CW 1
+    tmp.decrement(3) # now tmp is Monday CW1
+    return tmp
 
 def getDaysPerMonth(mon, yh, year):
 
