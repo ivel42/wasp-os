@@ -100,7 +100,7 @@ def main():
         print(key + ' | ' + str(value))
 
 
-    #test 2020
+    ##test 2020
     year = Year(20,20) 
     checkMoCw1(year, 30, 12, 20, 19)
     checkSpecialDay(year,  1,  1, "New Year")
@@ -208,6 +208,29 @@ def main():
     checkSpecialDay(year, 26,  3, "Summertime (eu)")
     checkSpecialDay(year, 29, 10, "Normaltime (eu)")
 
+    ##test 1848
+    year = Year(18,48) 
+    checkMoCw1(year, 3, 1, 18, 48)
+    checkSpecialDay(year,  1,  1, "New Year")
+    checkSpecialDay(year,  6,  1, "Holy three kings")
+    checkSpecialDay(year, 14,  2, "Valentine's day")
+    checkSpecialDay(year,  7,  3, "Shrove Tuesday")
+    checkSpecialDay(year,  8,  3, "Ash Wednesday")
+    checkSpecialDay(year, 21,  4, "Good Friday")
+    checkSpecialDay(year, 23,  4, "Easter Sunday")
+    checkSpecialDay(year, 24,  4, "Easter Monday")
+    checkSpecialDay(year,  1,  6, "Ascension of Christ")
+    checkSpecialDay(year, 11,  6, "Pentecost Sunday")
+    checkSpecialDay(year, 12,  6, "Whit Monday")
+    checkSpecialDay(year, 22,  6, "Corpus Christi")
+    checkSpecialDay(year,  1, 11, "All Saints Day")
+    checkSpecialDay(year, 11, 11, "Martin's Day")
+    checkSpecialDay(year,  3, 12, "1 Advent")
+    checkSpecialDay(year,  6, 12, "St. Nicholas Day")
+    checkSpecialDay(year, 24, 12, "Christmas eve")
+    checkSpecialDay(year, 25, 12, "First christmasday")
+    checkSpecialDay(year, 31, 12, "New Year's Eve")
+  
     ckeckCW(Day( 1,  1, 20, 20),  1)
     ckeckCW(Day( 5,  1, 20, 20),  1)
     ckeckCW(Day( 6,  1, 20, 20),  2)
@@ -221,6 +244,10 @@ def main():
     ckeckCW(Day(17,  1, 20, 21),  2)
     ckeckCW(Day(31,  3, 20, 21), 13)
     ckeckCW(Day(31, 12, 20, 21), 52)
+
+    ckeckCW(Day( 1,  1, 18, 47), 53)
+    ckeckCW(Day( 1,  1, 18, 48), 52)
+    ckeckCW(Day( 1,  1, 18, 49),  1)
 
 if __name__ == '__main__':
     main()

@@ -280,6 +280,7 @@ class Day:
                         self.year = 0
                         self.yh += 1                
                 daysOfMonth = self.daysOfMonth
+        return self
 
     def decrement(self, daysToSub):
         for ii in range(daysToSub):
@@ -296,6 +297,7 @@ class Day:
                         self.year = 99
                         self.yh -= 1                
                 self.day = self.daysOfMonth
+        return self
 
     @property
     def wd(self):
@@ -330,8 +332,12 @@ class Day:
     def cw(self):
         moCw1 = getMoCw1(self.yh, self.year)
         days = self - moCw1
-        week = int(days / 7) + 1
-        week = week + 52 if (days < 0) else week
+        week = int(days / 7)
+        if days < 0:
+            weeksOfLastYear = Day(1, 1, self.yh, self.year).decrement(1).cw
+            week += weeksOfLastYear
+        else:
+            week += 1
         return week
 
     @property
