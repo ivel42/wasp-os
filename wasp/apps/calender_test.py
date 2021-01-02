@@ -90,6 +90,8 @@ def main():
     checkDay(year, 18, 11, "Buß- und Bettag")
     checkDay(year, 25, 12, "First christmasday")
     checkDay(year, 26, 12, "Second christmasday")
+    checkDay(year, 29,  3, "Summertime (eu)")
+    checkDay(year, 25, 10, "Normaltime (eu)")
 
     #test 2021
     year = Year(20,21) 
@@ -114,6 +116,8 @@ def main():
     checkDay(year, 17, 11, "Buß- und Bettag")
     checkDay(year, 25, 12, "First christmasday")
     checkDay(year, 26, 12, "Second christmasday")
+    checkDay(year, 28,  3, "Summertime (eu)")
+    checkDay(year, 31, 10, "Normaltime (eu)")
 
     #test 2021
     year = Year(20,21) 
@@ -138,6 +142,8 @@ def main():
     checkDay(year, 17, 11, "Buß- und Bettag")
     checkDay(year, 25, 12, "First christmasday")
     checkDay(year, 26, 12, "Second christmasday")
+    checkDay(year, 28,  3, "Summertime (eu)")
+    checkDay(year, 31, 10, "Normaltime (eu)")
 
     #test 2022
     year = Year(20,22) 
@@ -162,6 +168,8 @@ def main():
     checkDay(year, 16, 11, "Buß- und Bettag")
     checkDay(year, 25, 12, "First christmasday")
     checkDay(year, 26, 12, "Second christmasday")
+    checkDay(year, 27,  3, "Summertime (eu)")
+    checkDay(year, 30, 10, "Normaltime (eu)")
 
     #test 2023
     year = Year(20,23) 
@@ -186,6 +194,8 @@ def main():
     checkDay(year, 22, 11, "Buß- und Bettag")
     checkDay(year, 25, 12, "First christmasday")
     checkDay(year, 26, 12, "Second christmasday")
+    checkDay(year, 26,  3, "Summertime (eu)")
+    checkDay(year, 29, 10, "Normaltime (eu)")
 
 
 if __name__ == '__main__':
