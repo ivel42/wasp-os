@@ -218,7 +218,6 @@ class Year:
         # US Veterans Day - November 11 (Fixed)
         # US Thanksgiving Day - November 22–28 (Floating Thursday)
 
-
     def isSpecialDay(self, day, mon):
         retval = list()
         for key, sDay in self.specialDays.items():

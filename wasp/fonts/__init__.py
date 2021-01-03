@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2020 Daniel Thompson
 
-import fonts.sans17 as sans17
+import fonts.sansMono17 as sans17
 import fonts.sans24 as sans24
 import fonts.sans28 as sans28
 import fonts.sans36 as sans36

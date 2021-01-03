@@ -115,13 +115,13 @@ class ClockApp():
             # only update the main clock once per minute.
             now = wasp.system.bar.update()
         
-        if redraw or (self._day != now[2]):
+        if now and (redraw or (self._day != now[2])):
             # Record the day that is currently being displayed
             self._clear()
             self._drawPerDay(now)
             redraw = True
 
-        if redraw or (self._min != now[4]):
+        if now and (redraw or (self._min != now[4])):
             # Record the minute that is currently being displayed
             self._min = now[4]
             self._drawPerMin(now)

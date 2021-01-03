@@ -29,6 +29,7 @@ from apps.settings import SettingsApp
 from apps.steps import StepCounterApp
 from apps.stopwatch import StopwatchApp
 from apps.testapp import TestApp
+from apps.monthly_calender import MonthlyCalenderApp
 
 class EventType():
     """Enumerated interface actions.
@@ -136,6 +137,7 @@ class Manager():
 
         # TODO: Eventually these should move to main.py
         for app, qr in ( (ClockApp, True),
+                         (MonthlyCalenderApp, True),
                          (StepCounterApp, True),
                          (StopwatchApp, True),
                          (HeartApp, True),
