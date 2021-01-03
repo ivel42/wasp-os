@@ -116,27 +116,29 @@ class Calender():
     """
 
 class Year:
-    def __init__(self, yh, year):
-        self.yh   = yh   # year hundred
-        self.year = year # year - the last 2 digits
+    def __init__(self, year):
+        self.year = year
         self.specialDays = dict()
         self.update()
 
     def __str__(self):
-        return f'{self.yh}{self.year}'
+        return f'{self.year}'
 
     def addSpecialDay(self, specialDay):
         self.specialDays[specialDay._name] = specialDay
 
     def update(self):
-        self.easter = getEaster(self.yh, self.year)
-        self.moCw1  = getMoCw1( self.yh, self.year)
-        self.ref1 = Day(27, 11, self.yh, self.year) # needed for 1. Advent
-        self.ref2 = Day( 1,  5, self.yh, self.year) # needed for Muttertag
-        self.ref3 = Day(23, 11, self.yh, self.year) # needed for Buß und Bettag
-        self.ref4 = Day( 1, 10, self.yh, self.year) # needed for Erntedank
-        self.ref5 = Day( 1,  4, self.yh, self.year) # needed for Sommerzeit
-        self.ref6 = Day( 1, 11, self.yh, self.year) # needed for Normalzeit
+        yh   = self.year // 100 # year hundred
+        ys   = self.year %  100 # year - the last 2 digits
+
+        self.easter = getEaster(yh, ys)
+        self.moCw1  = getMoCw1( self.year)
+        self.ref1 = Day(27, 11, self.year) # needed for 1. Advent
+        self.ref2 = Day( 1,  5, self.year) # needed for Muttertag
+        self.ref3 = Day(23, 11, self.year) # needed for Buß und Bettag
+        self.ref4 = Day( 1, 10, self.year) # needed for Erntedank
+        self.ref5 = Day( 1,  4, self.year) # needed for Sommerzeit
+        self.ref6 = Day( 1, 11, self.year) # needed for Normalzeit
 
 
         self.addSpecialDay(SpecialDay(name="Women's Shrovetide",   day=self.easter, offset= -52))
@@ -172,38 +174,38 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Normaltime (eu)",   day=self.ref6, offset= -7, incToWeekDay=1)) 
 
         
-        self.addSpecialDay(SpecialDay(name="New Year",                      day= 1, mon= 1, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Women's Day",                   day= 8, mon= 3, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Victory in Europe",             day= 8, mon= 5, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Constitution (de)",             day=23, mon= 5, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Peace Festival Augsburg",       day= 8, mon= 8, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Children's Day",                day=20, mon= 9, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Construction of the wall 1961", day=13, mon=10, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Reformation Day 1517",          day=31, mon=10, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="All Saints Day",                day= 1, mon=11, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="All Souls Day",                 day= 2, mon=11, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="October Revolution 1917",       day= 7, mon=11, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="9. November (Germany)",         day= 9, mon=11, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="St. Nicholas Day",              day= 6, mon=12, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Mary Conception",               day= 8, mon=12, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Martin's Day" ,                 day=11, mon=11, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Winter solstice",               day=22, mon=12, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Christmas eve" ,                day=24, mon=12, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="First christmasday",            day=25, mon=12, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, yh=self.yh, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="New Year's Eve",                day=31, mon=12, yh=self.yh, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="New Year",                      day= 1, mon= 1, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Women's Day",                   day= 8, mon= 3, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Victory in Europe",             day= 8, mon= 5, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Constitution (de)",             day=23, mon= 5, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Peace Festival Augsburg",       day= 8, mon= 8, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Children's Day",                day=20, mon= 9, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Construction of the wall 1961", day=13, mon=10, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Reformation Day 1517",          day=31, mon=10, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="All Saints Day",                day= 1, mon=11, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="All Souls Day",                 day= 2, mon=11, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="October Revolution 1917",       day= 7, mon=11, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="9. November (Germany)",         day= 9, mon=11, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="St. Nicholas Day",              day= 6, mon=12, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Mary Conception",               day= 8, mon=12, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Martin's Day" ,                 day=11, mon=11, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Winter solstice",               day=22, mon=12, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Christmas eve" ,                day=24, mon=12, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="First christmasday",            day=25, mon=12, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="New Year's Eve",                day=31, mon=12, year=self.year)) 
 
         # days to add
         # UK https://de.wikipedia.org/wiki/Boxing_Day
@@ -236,40 +238,40 @@ class Year:
 class Day:
     """
     """
-    def __init__(self, day, mon, yh, year):
+    def __init__(self, day, mon, year):
         self.day  = day  # day of the month
         self.mon  = mon  # month of the year
-        self.yh   = yh   # year hundred
-        self.year = year # year - the last 2 digits
+        self.yh   = year // 100 # year hundred
+        self.ys   = year %  100 # year - the last 2 digits
 
-    def __str__(self):
-        return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year}'
+    def __str__(self): 
+        return f'{WEEK_DAYS_DE.get(self.__wd__)} - {self.day}.{self.mon}.{self.year}'
 
     def __eq__(self, other):
-        if self.day == other.day and self.mon == other.mon and self.yh == other.yh and self.year == other.year:
+        if self.day == other.day and self.mon == other.mon and self.year == other.year:
             return True
         else:
             return False
             
     def __lt__(self, other):
-        if self.yh < other.yh:
+        o_year = other.year
+        s_year = self.year
+        if s_year < o_year:
             return True
-        if self.yh == other.yh and self.year < other.year:
+        if s_year == o_year and self.mon < other.mon:
             return True
-        if self.yh == other.yh and self.year == other.year and self.mon < other.mon:
-            return True
-        if self.yh == other.yh and self.year == other.year and self.mon == other.mon and self.day < other.day:
+        if s_year == o_year and self.mon == other.mon and self.day < other.day:
             return True
         return False
 
     def __gt__(self, other):
-        if self.yh > other.yh:
+        o_year = other.year
+        s_year = self.year
+        if s_year > o_year:
             return True
-        if self.yh == other.yh and self.year > other.year:
+        if s_year == o_year and self.mon > other.mon:
             return True
-        if self.yh == other.yh and self.year == other.year and self.mon > other.mon:
-            return True
-        if self.yh == other.yh and self.year == other.year and self.mon == other.mon and self.day > other.day:
+        if s_year == o_year and self.mon == other.mon and self.day > other.day:
             return True
         return False
 
@@ -295,10 +297,10 @@ class Day:
                     self.mon += 1
                 else:
                     self.mon = 1
-                    if (self.year < 99):
-                        self.year += 1
+                    if (self.ys < 99):
+                        self.ys += 1
                     else:
-                        self.year = 0
+                        self.ys = 0
                         self.yh += 1                
                 daysOfMonth = self.daysOfMonth
         return self
@@ -312,21 +314,25 @@ class Day:
                     self.mon -= 1
                 else:
                     self.mon = 12
-                    if (self.year > 1):
-                        self.year -= 1
+                    if (self.ys > 1):
+                        self.ys -= 1
                     else:
-                        self.year = 99
+                        self.ys = 99
                         self.yh -= 1                
                 self.day = self.daysOfMonth
         return self
 
     @property
-    def wd(self):
+    def year(self):
+        return self.yh * 100 + self.ys
+
+    @property
+    def __wd__(self):
         """
         weekDay in format So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6, Sa: 0
         """
         mon  = self.mon
-        year = self.year
+        year = self.ys
 
         # Month to convert after Zeller - jan, feb will be 13 & 14 month of the year before
         if ( (mon == 1) or (mon == 2) ):
@@ -343,26 +349,26 @@ class Day:
 
     @property
     def wd_norm(self):
-        wd = self.wd
+        wd = self.__wd__
         wd = wd + 7 if wd < 2 else wd 
         wd -= 2
         return wd
 
     @property
     def weekday(self):
-        return WEEK_DAYS_DE[self.wd]
+        return WEEK_DAYS_DE[self.__wd__]
 
     @property
     def weekdayShort(self):
-        return WEEK_DAYS_DE[self.wd][0:2]
+        return WEEK_DAYS_DE[self.__wd__][0:2]
     
     @property
     def cw(self):
-        moCw1 = getMoCw1(self.yh, self.year)
+        moCw1 = getMoCw1(self.year)
         days = self - moCw1
         week = int(days / 7)
         if days < 0:
-            weeksOfLastYear = Day(1, 1, self.yh, self.year).decrement(1).cw
+            weeksOfLastYear = Day(1, 1, self.year).decrement(1).cw
             week += weeksOfLastYear
         else:
             week += 1
@@ -370,7 +376,7 @@ class Day:
 
     @property
     def daysOfMonth(self):
-        return getDaysPerMonth(self.mon, self.yh, self.year)
+        return getDaysPerMonth(self.mon, self.yh, self.ys)
 
     def incToWeekDay(self, nextWeekDay):
         """
@@ -379,7 +385,7 @@ class Day:
         weekDay in format So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6, Sa: 0
         """
 
-        currentWeekDay = self.wd
+        currentWeekDay = self.__wd__
 
         if( nextWeekDay > currentWeekDay ):
             self.increment(nextWeekDay - currentWeekDay)
@@ -390,12 +396,12 @@ class Day:
 
 
 class SpecialDay(Day):
-    def __init__(self, day=1, mon=1, yh=0, year=0, name='', offset=0, incToWeekDay=-1):
+    def __init__(self, day=1, mon=1, year=0, name='', offset=0, incToWeekDay=-1):
 
         if isinstance(day, Day):
-            super(SpecialDay, self).__init__(day.day, day.mon, day.yh, day.year)
+            super(SpecialDay, self).__init__(day.day, day.mon, day.year)
         else:
-            super(SpecialDay, self).__init__(day, mon, yh, year)
+            super(SpecialDay, self).__init__(day, mon, year)
         
         self.name = name
         
@@ -416,7 +422,7 @@ class SpecialDay(Day):
         if self.type == SpecialDayType.HOLIDAY:
             dtype = "holiday"
  
-        return f'{WEEK_DAYS_DE.get(self.wd)} - {self.day}.{self.mon}.{self.yh}{self.year} - {self.name} - {dtype}' 
+        return f'{WEEK_DAYS_DE.get(self.__wd__)} - {self.day}.{self.mon}.{self.year}{self.ys} - {self.name} - {dtype}' 
 
     @property
     def name(self):
@@ -430,42 +436,43 @@ class SpecialDay(Day):
     def type(self):
         return(TRANSLATE_US_DE[self._name]['type'])
 
-def getEaster(jh, year):
+def getEaster(yh, ys):
 
     # Berechnung nach Christian Zeller
     
-    a = (5 * jh + year) % 19
-    g = jh - int(jh / 4) - int(((8 * jh) + 13) / 25)
+    a = (5 * yh + ys) % 19
+    g = yh - int(yh / 4) - int(((8 * yh) + 13) / 25)
     b = ((19 * a) + 15 + g) % 30
-    d = (b + year + int(year/4) + int(jh/4) + 2 - (2 * jh)) % 7
+    d = (b + ys + int(ys/4) + int(yh/4) + 2 - (2 * yh)) % 7
     d = d + 7 if ( d < 0 ) else d
     # Sonderfallbehandlung
     if( ((d == 0) and (b == 29)) or ((d == 0) and (b == 28) and (a > 10)) ):
         d = 7
     daysAfter21M = b + 7 - int(d)
     
-     # Obige Formeln bestimmen wieviele Tage Ostersonntag nach dem 21.3 ist
-    easter = Day(21, 3, jh, year)
+    # Obige Formeln bestimmen wieviele Tage Ostersonntag nach dem 21.3 ist
+    year = yh * 100 + ys
+    easter = Day(21, 3, year)
     easter.increment(daysAfter21M)
 
     return easter
 
-def getMoCw1(yh, year):
-    tmp = Day( 1,  1, yh, year) # needed for Calender week - ISO 8601
+def getMoCw1(year):
+    tmp = Day( 1,  1, year) # needed for Calender week - ISO 8601
     tmp.incToWeekDay(5) # Thursday is always CW 1
     tmp.decrement(3) # now tmp is Monday CW1
     return tmp
 
-def getDaysPerMonth(mon, yh, year):
+def getDaysPerMonth(mon, yh, ys):
 
     if not (mon == 2):
         d = DAYS_PER_MONTH.get(mon)
     else:
-        if((year % 4) == 0): # wenn das jahr durch 4 teilbar ist schaltjahr
+        if((ys % 4) == 0): # wenn das jahr durch 4 teilbar ist schaltjahr
             d = 29
-            if(year == 0): # außer volles jh
+            if(ys == 0): # außer volles yh
                 d = 28
-                if((yh % 4) == 0): # ausnahme der ausnahme: jh durch 4 teilbar
+                if((yh % 4) == 0): # ausnahme der ausnahme: yh durch 4 teilbar
                     d = 29
         else:
             d = 28
