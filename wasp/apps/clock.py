@@ -12,6 +12,7 @@ import wasp
 #from wasp import watch.drawable as draw
 
 import icons
+import fonts
 import fonts.clock as digits
 import gregorian_calender as greg_cal
 
@@ -151,10 +152,14 @@ class ClockApp():
         # draw current date
         d = self.calDay
         draw.set_color(mid)
+        draw.set_font(fonts.sans24)
+        #draw.string('KW Mo Di Mi Do Fr Sa So',
+        #        0, 110)
         draw.string('{} {} {}.{}.{}'.format(d.cw, d.weekdayShort, d.day, d.mon, d.year),
                 0, 110, width=240)
         
         # draw date info
+        draw.set_font(fonts.sans17)
         info_line = 0
         tmp = self.year.isSpecialDay(d.day, d.mon)
         if len(tmp) == 0:
