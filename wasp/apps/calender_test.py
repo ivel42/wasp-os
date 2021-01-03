@@ -22,6 +22,30 @@ def ckeckCW(day, cw):
     else:
         logging.info(f'CW is right for {day}!')
 
+def printCal( mon, yh, year):
+    calStr = ''
+    calStr += f'{MONTH_NAMES_DE[mon]} {yh}{year}\n'
+    calStr += 'KW Mo Di Mi Do Fr Sa So\n'
+    d = Day(1, mon, yh, year)
+    while d.mon == mon:
+        if d.cw < 10:
+            calStr += ' '
+        calStr += f'{d.cw}'
+        offset = 3 * d.wd_norm
+        for ii in range(offset):
+            calStr += ' '
+        while d.mon == mon:
+            if d.day < 10:
+                calStr += '  '
+            else:
+                calStr += ' '
+            calStr += f'{d.day}'
+            d.increment(1)
+            if d.wd_norm == 0:
+                if d.mon == mon:
+                    calStr += '\n'
+                break
+    print(calStr+'\n')
 
 def ckeckDiff():
     t1 = Day(27, 11, 20, 20)
@@ -271,6 +295,19 @@ def main():
     ckeckCW(Day( 1,  1, 18, 47), 53)
     ckeckCW(Day( 1,  1, 18, 48), 52)
     ckeckCW(Day( 1,  1, 18, 49),  1)
+
+    printCal( 1, 20, 21)
+    printCal( 2, 20, 21)
+    printCal( 3, 20, 21)
+    printCal( 4, 20, 21)
+    printCal( 5, 20, 21)
+    printCal( 6, 20, 21)
+    printCal( 7, 20, 21)
+    printCal( 8, 20, 21)
+    printCal( 9, 20, 21)
+    printCal( 10, 20, 21)
+    printCal( 11, 20, 21)
+    printCal( 12, 20, 21)
 
 if __name__ == '__main__':
     main()

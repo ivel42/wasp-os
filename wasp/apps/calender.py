@@ -20,6 +20,19 @@ WEEK_DAYS_DE = {0: 'Samstag',
                 5: 'Donnerstag',
                 6: 'Freitag'}
 
+MONTH_NAMES_DE = {1: 'Januar',
+                  2: 'Februar',
+                  3: 'März',
+                  4: 'April',
+                  5: 'Mai',
+                  6: 'Juni',
+                  7: 'Juli',
+                  8: 'August',
+                  9: 'September',
+                 10: 'Oktober',
+                 11: 'November',
+                 12: 'Dezember'}
+
 DAYS_PER_MONTH = { 1: 31,
                    3: 31,
                    4: 30,
@@ -319,6 +332,13 @@ class Day:
         aktWoTag = aktWoTag + 7 if (aktWoTag < 0) else aktWoTag
         
         return aktWoTag
+
+    @property
+    def wd_norm(self):
+        wd = self.wd
+        wd = wd + 7 if wd < 2 else wd 
+        wd -= 2
+        return wd
 
     @property
     def weekday(self):
