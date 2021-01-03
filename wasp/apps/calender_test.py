@@ -15,6 +15,18 @@ LOGGING_LEVELS = {'critical': logging.CRITICAL,
                   'info'    : logging.INFO,
                   'debug'   : logging.DEBUG}
 
+class Colour:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
 def ckeckCW(day, cw):
     calCw = day.cw
     if calCw != cw:
@@ -23,6 +35,7 @@ def ckeckCW(day, cw):
         logging.info(f'CW is right for {day}!')
 
 def printCal( mon, yh, year):
+    y = Year(yh, year) 
     calStr = ''
     calStr += f'{MONTH_NAMES_DE[mon]} {yh}{year}\n'
     calStr += 'KW Mo Di Mi Do Fr Sa So\n'
@@ -35,11 +48,24 @@ def printCal( mon, yh, year):
         for ii in range(offset):
             calStr += ' '
         while d.mon == mon:
+            color = False
             if d.day < 10:
                 calStr += '  '
             else:
                 calStr += ' '
+            dType = y.specialDayType(d.day, d.mon)
+            if d.wd_norm == 6: # So
+                calStr += Colour.RED
+                color = True
+            if dType == SpecialDayType.INFO_DAY: 
+                calStr += Colour.CYAN
+                color = True
+            if dType == SpecialDayType.HOLIDAY: 
+                calStr += Colour.GREEN
+                color = True
             calStr += f'{d.day}'
+            if color: 
+                calStr += Colour.END
             d.increment(1)
             if d.wd_norm == 0:
                 if d.mon == mon:

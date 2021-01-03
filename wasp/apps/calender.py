@@ -225,6 +225,14 @@ class Year:
 
         return retval
 
+    def specialDayType(self, day, mon):
+        retval = 0
+        for key, sDay in self.specialDays.items():
+            if sDay.day == day and sDay.mon == mon:
+                retval = max(retval, sDay.type)
+
+        return retval
+
 class Day:
     """
     """
