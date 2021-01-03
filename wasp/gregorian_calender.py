@@ -111,10 +111,6 @@ TRANSLATE_US_DE = {
     "New Year's Eve"                : {"name" : "Silvester"                , "type":SpecialDayType.INFO_DAY } ,  
 } 
 
-class Calender():
-    """
-    """
-
 class Year:
     def __init__(self, year):
         self.year = year
@@ -393,7 +389,6 @@ class Day:
             self.increment(7 - currentWeekDay + nextWeekDay)
             #printf("aktW: %i, gesW: %i -> %i tage addiern\n",aktWoTag,sWoTag,7-aktWoTag+sWoTag);
 
-
 class SpecialDay(Day):
     def __init__(self, day=1, mon=1, year=0, name='', offset=0, incToWeekDay=-1):
 
@@ -476,4 +471,3 @@ def getDaysPerMonth(mon, yh, ys):
         else:
             d = 28
     return d
-

@@ -97,7 +97,6 @@ def checkMoCw1(calYear, day, mon, year):
     else:
         logging.info('MoCw1 right for calender year ' + str(calYear))
 
-
 def checkSpecialDay(year, day, mon, name ):
 
     tmp = year.isSpecialDay(day,mon)
@@ -150,7 +149,7 @@ def main():
         print(key + ' | ' + str(value))
 
 
-    ##test 2020
+    # test 2020
     year = Year(2020) 
     checkMoCw1(year, 30, 12, 2019)
     checkSpecialDay(year,  1,  1, "New Year")
@@ -177,7 +176,7 @@ def main():
     checkSpecialDay(year, 29,  3, "Summertime (eu)")
     checkSpecialDay(year, 25, 10, "Normaltime (eu)")
     
-    ##test 2021
+    # test 2021
     year = Year(2021) 
     checkMoCw1(year, 4, 1, 2021)
     checkSpecialDay(year,  1,  1, "New Year")
@@ -204,7 +203,7 @@ def main():
     checkSpecialDay(year, 28,  3, "Summertime (eu)")
     checkSpecialDay(year, 31, 10, "Normaltime (eu)")
 
-    ##test 2022
+    # test 2022
     year = Year(2022) 
     checkMoCw1(year, 3, 1, 2022)
     checkSpecialDay(year,  1,  1, "New Year")
@@ -231,7 +230,7 @@ def main():
     checkSpecialDay(year, 27,  3, "Summertime (eu)")
     checkSpecialDay(year, 30, 10, "Normaltime (eu)")
 
-    ##test 2023
+    # test 2023
     year = Year(2023) 
     checkMoCw1(year, 2, 1, 2023)
     checkSpecialDay(year,  1,  1, "New Year")
@@ -258,7 +257,7 @@ def main():
     checkSpecialDay(year, 26,  3, "Summertime (eu)")
     checkSpecialDay(year, 29, 10, "Normaltime (eu)")
 
-    ##test 1848
+    # test 1848
     year = Year(1848) 
     checkMoCw1(year, 3, 1, 1848)
     checkSpecialDay(year,  1,  1, "New Year")
@@ -281,7 +280,7 @@ def main():
     checkSpecialDay(year, 25, 12, "First christmasday")
     checkSpecialDay(year, 31, 12, "New Year's Eve")
   
-    ##test 1583 - first valid year - gregorian calender!
+    # test 1583 - first valid year - gregorian calender!
     year = Year(1583) 
     checkMoCw1(year, 3, 1, 1583)
     checkSpecialDay(year,  1,  1, "New Year")

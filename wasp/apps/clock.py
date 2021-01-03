@@ -63,7 +63,6 @@ class ClockApp():
         mid = wasp.system.theme('accent-mid')
         lo =  wasp.system.theme('accent-lo')
 
-
     def sleep(self):
         """Prepare to enter the low power mode.
 
@@ -126,10 +125,7 @@ class ClockApp():
             self._min = now[4]
             self._drawPerMin(now)
 
-                
- 
     def _drawPerDay(self, now):
-
         draw = wasp.watch.drawable
         hi =  wasp.system.theme('accent-hi')
         mid = wasp.system.theme('accent-mid')
@@ -153,8 +149,6 @@ class ClockApp():
         d = self.calDay
         draw.set_color(mid)
         draw.set_font(fonts.sans24)
-        #draw.string('KW Mo Di Mi Do Fr Sa So',
-        #        0, 110)
         draw.string('{} {} {}.{}.{}'.format(d.cw, d.weekdayShort, d.day, d.mon, d.year),
                 0, 110, width=240)
         
