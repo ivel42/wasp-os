@@ -6,7 +6,7 @@
 
 import logging
 import optparse
-from calender import *
+from gregorian_calender import *
 
 # import pdb # debugging e.g. pdb.set_trace() for breakpoint
 LOGGING_LEVELS = {'critical': logging.CRITICAL,
