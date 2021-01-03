@@ -62,7 +62,7 @@ class MonthlyCalenderApp():
             tmp = greg_cal.Year(self.year).isSpecialDay(d, self.mon)
             if len(tmp) == 0:
                 draw.set_color(lo)
-                draw.string('no special day', 0, 190+self.lc[1]*info_line, width=240)
+                draw.string('no special day', 0, 190, width=240)
             else:
                 info_line = 0
                 for item in tmp:
