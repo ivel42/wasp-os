@@ -87,9 +87,9 @@ class ClockApp():
  
     def _clear(self):
         draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
+        hi =  wasp.system.theme('bright')
+        lo =  wasp.system.theme('mid')
+        mid = draw.lighten(lo, 1)
 
         # Clear the display and draw that static parts of the watch face
         draw.fill()
@@ -155,9 +155,9 @@ class ClockApp():
 
     def _updateDisplayDay(self):
         draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
+        hi =  wasp.system.theme('bright')
+        lo =  wasp.system.theme('mid')
+        mid = draw.lighten(lo, 1)
         d = self.calDay
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
@@ -190,9 +190,9 @@ class ClockApp():
     def _drawPerMin(self, now):
  
         draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
+        hi =  wasp.system.theme('bright')
+        lo =  wasp.system.theme('mid')
+        mid = draw.lighten(lo, 1)
  
         # Draw the changeable parts of the watch face
         draw.blit(DIGITS[now[4]  % 10], 4*48, 80, fg=hi)

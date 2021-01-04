@@ -59,9 +59,9 @@ class MonthlyCalenderApp():
 
     def _updateDisplayDay(self):
         draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
+        hi =  wasp.system.theme('bright')
+        lo =  wasp.system.theme('mid')
+        mid = draw.lighten(lo, 1)
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
         draw.set_font(fonts.sansMono18)
@@ -92,9 +92,9 @@ class MonthlyCalenderApp():
 
     def _draw(self):
         draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
+        hi =  wasp.system.theme('bright')
+        lo =  wasp.system.theme('mid')
+        mid = draw.lighten(lo, 1)
 
         draw.fill()
         draw.set_color(hi)
