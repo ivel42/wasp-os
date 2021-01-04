@@ -4,6 +4,7 @@
 import wasp
 import fonts
 import gregorian_calender as greg_cal
+import gregorian_calender_cfg_de as greg_cal_cfg
 
 class MonthlyCalenderApp():
     """A calender app for wasp-os."""
@@ -93,7 +94,7 @@ class MonthlyCalenderApp():
         tab = 0
  
         y = greg_cal.Year(self.year) 
-        s = f'{greg_cal.MONTH_NAMES_DE[self.mon]} {self.year}'
+        s = f'{greg_cal_cfg.MONTH_NAMES[self.mon]} {self.year}'
         draw.string(s, self.tc[0]+self.tc[1]*tab, self.lc[0]+self.lc[1]*line, width=240)
         line += 1
 

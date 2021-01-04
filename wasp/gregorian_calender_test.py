@@ -7,6 +7,8 @@
 import logging
 import optparse
 from gregorian_calender import *
+import gregorian_calender_cfg_de as cfg
+
 
 # import pdb # debugging e.g. pdb.set_trace() for breakpoint
 LOGGING_LEVELS = {'critical': logging.CRITICAL,
@@ -37,7 +39,7 @@ def ckeckCW(day, cw):
 def printCal( mon, year):
     y = Year(year) 
     calStr = ''
-    calStr += f'{MONTH_NAMES_DE[mon]} {year}\n'
+    calStr += f'{cfg.MONTH_NAMES[mon]} {year}\n'
     calStr += 'KW Mo Di Mi Do Fr Sa So\n'
     d = Day(1, mon, year)
     while d.mon == mon:
@@ -138,10 +140,10 @@ def main():
     logging.info('Logging Lever set to ' + str(logging_level))
 
     easter = getEaster(20, 21)
-    logging.info(f'Easter is on {WEEK_DAYS_DE.get(easter.__wd__)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
+    logging.info(f'Easter is on {cfg.WEEK_DAYS.get(easter.__wd__)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
 
     easter = getEaster(20, 20)
-    logging.info(f'Easter is on {WEEK_DAYS_DE.get(easter.__wd__)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
+    logging.info(f'Easter is on {cfg.WEEK_DAYS.get(easter.__wd__)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
 
     year = Year(2020)
 
