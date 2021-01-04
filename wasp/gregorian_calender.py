@@ -15,11 +15,20 @@ DAYS_PER_MONTH = { 1: 31,
                    5: 31,
                    6: 30,
                    7: 31,
-                   8: 30,
-                   9: 31,
+                   8: 31,
+                   9: 30,
                   10: 31,
                   11: 30,
                   12: 31}
+
+class WeekDayNorm():
+    MONDAY    = 0
+    TUESDAY   = 1
+    WEDNESDAY = 2
+    THURSDAY  = 3
+    FRIDAY    = 4
+    SATURDAY  = 5
+    SUNDAY    = 6
 
 class SpecialDayType():
     IGNORE   = 0
@@ -39,7 +48,7 @@ dayColors = {'sunday'  : colors['red'],
              'infoday' : colors['cyan']}
 
 import copy
-import gregorian_calender_cfg_uk as cfg
+import gregorian_calender_cfg_de as cfg
 
 class Year:
     def __init__(self, year):
@@ -78,7 +87,7 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Easter Sunday",        day=self.easter))              
         self.addSpecialDay(SpecialDay(name="Easter Monday",        day=self.easter, offset=   1)) 
         self.addSpecialDay(SpecialDay(name="White Sunday",         day=self.easter, offset=   7)) 
-        self.addSpecialDay(SpecialDay(name="Fathers day",          day=self.easter, offset=  39)) 
+        self.addSpecialDay(SpecialDay(name="Fathers day (de)",     day=self.easter, offset=  39)) 
         self.addSpecialDay(SpecialDay(name="Ascension of Christ",  day=self.easter, offset=  39)) 
         self.addSpecialDay(SpecialDay(name="Pentecost Sunday",     day=self.easter, offset=  49)) 
         self.addSpecialDay(SpecialDay(name="Whit Monday",          day=self.easter, offset=  50)) 
@@ -90,7 +99,7 @@ class Year:
         self.addSpecialDay(SpecialDay(name="3 Advent",          day=self.ref1, offset=14, incToWeekDay=1)) 
         self.addSpecialDay(SpecialDay(name="4 Advent",          day=self.ref1, offset=21, incToWeekDay=1)) 
 
-        self.addSpecialDay(SpecialDay(name="Mother's Day",      day=self.ref2, offset=7, incToWeekDay=1)) 
+        self.addSpecialDay(SpecialDay(name="Mother's Day (de,us)",      day=self.ref2, offset=7, incToWeekDay=1)) 
         
         self.addSpecialDay(SpecialDay(name="Thanksgiving (de)", day=self.ref4, incToWeekDay=1)) 
 
@@ -104,17 +113,19 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Holy three kings",              day= 6, mon= 1, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Valentine's day",               day=14, mon= 2, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Women's Day",                   day= 8, mon= 3, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="March equinox",                 day=20, mon= 3, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Day of the beer",               day=23, mon= 4, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Labor Day (de)",                day= 1, mon= 5, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Europe day",                    day= 5, mon= 5, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Victory in Europe",             day= 8, mon= 5, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Constitution (de)",             day=23, mon= 5, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Popular uprising DDR 1953",     day=17, mon= 6, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 6, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Attack 1944",                   day=20, mon= 7, year=self.year)) 
-        self.addSpecialDay(SpecialDay(name="Summer solstice",               day=21, mon= 7, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Peace Festival Augsburg",       day= 8, mon= 8, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Assumption Day",                day=15, mon= 8, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Children's Day",                day=20, mon= 9, year=self.year)) 
+        self.addSpecialDay(SpecialDay(name="September equinox",             day=23, mon= 9, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Begin WW2 1939",                day= 1, mon=10, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Day of German unity",           day= 3, mon=10, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="Hiroshima 1945",                day= 6, mon=10, year=self.year)) 
@@ -133,8 +144,85 @@ class Year:
         self.addSpecialDay(SpecialDay(name="Second christmasday",           day=26, mon=12, year=self.year)) 
         self.addSpecialDay(SpecialDay(name="New Year's Eve",                day=31, mon=12, year=self.year)) 
 
+        # see https://en.wikipedia.org/wiki/Public_and_bank_holidays_in_Scotland
+        # The holiday on 1 January (or 2 January if 1 January is Sunday) is statutory. If New Year's Day is Saturday a 
+        # substitute holiday is given on 4 January by Royal Proclamation. 2 January is given by Royal Proclamation, with 
+        # a substitute holiday on 4 January if it is Saturday and 3 January if it is Sunday or Monday. 
+        if self.specialDays["New Year"].wd_norm == WeekDayNorm.SATURDAY or self.specialDays["New Year"].wd_norm == WeekDayNorm.SUNDAY:
+            self.addSpecialDay(SpecialDay(name="New Year observed (uk)", day= 1, mon= 1, year=self.year, incToWeekDay=2)) 
+            secoundJan = copy.copy(self.specialDays["New Year observed (uk)"]).increment(1)
+        else:
+            secoundJan = copy.copy(self.specialDays["New Year"]).increment(1)
+        secoundJan.name = "2nd January (Scotland)"
+
+        if secoundJan.wd_norm == WeekDayNorm.SATURDAY or secoundJan.wd_norm == WeekDayNorm.SUNDAY:
+            secoundJan.incToWeekDay(2)
+        self.addSpecialDay(secoundJan)
+
+        self.addSpecialDay(SpecialDay(name="St Patrick's Day",  day=17, mon=3, year=self.year)) 
+        if self.specialDays["St Patrick's Day"].wd_norm == WeekDayNorm.SATURDAY or self.specialDays["St Patrick's Day"].wd_norm == WeekDayNorm.SUNDAY:
+            self.addSpecialDay(SpecialDay(name="St Patrick's Day observed (ni)", day= 17, mon= 3, year=self.year, incToWeekDay=2)) 
+
+        self.addSpecialDay(SpecialDay(name="St. David's Day",  day=1, mon=3, year=self.year)) 
+
+        # see https://en.wikipedia.org/wiki/Saint_George%27s_Day
+        # no saints' day should be celebrated between Palm Sunday and the Sunday after Easter Day so if 23 April falls 
+        # in that period the celebrations are transferred to after it.
+        saintGeorgesDay = SpecialDay(name="Saint George's Day", day= 23, mon= 4, year=self.year)        
+        if not saintGeorgesDay < self.specialDays["Palm Sunday"]:
+            while not saintGeorgesDay > self.specialDays["White Sunday"]:
+                saintGeorgesDay.increment(1)
+        self.addSpecialDay(saintGeorgesDay) 
+
+        self.addSpecialDay(SpecialDay(name="Shakespeare Day",  day=23, mon=4, year=self.year)) 
+
+        # in 1995 this holiday was moved to Monday 8 May and in 2020 to Friday 8 May – to commemorate the 50th and 75th anniversary of VE Day.
+        if self.year == 1995 or self.year == 2020:
+            self.addSpecialDay(SpecialDay(name="Early May Bank Holiday",  day=8, mon=5, year=self.year)) 
+        else:
+            self.addSpecialDay(SpecialDay(name="Early May Bank Holiday",  day=1, mon=5, year=self.year, incToWeekDay=2)) 
+        
+        # see Queen's Platinum Jubilee in 2022 https://www.bbc.com/news/uk-54911550
+        if self.year == 2022:
+            self.addSpecialDay(SpecialDay(name="Spring Bank Holiday",  day=2, mon=6, year=self.year)) 
+            self.addSpecialDay(SpecialDay(name="Queen's Platinum Jubilee",  day=3, mon=6, year=self.year)) 
+        else:
+            self.addSpecialDay(SpecialDay(name="Spring Bank Holiday",  day=31, mon=5, year=self.year, offset=-6, incToWeekDay=2)) 
+
+        #  Queen's Official Birthday celebrated on the second Saturday of June see https://en.wikipedia.org/wiki/Queen%27s_Official_Birthday
+        self.addSpecialDay(SpecialDay(name="Queen's Official Birthday",  day=1, mon=6, year=self.year, offset=7, incToWeekDay=0)) 
+
+        #  It is celebrated in Canada, the United Kingdom, and the United States on the third Sunday of June
+        self.addSpecialDay(SpecialDay(name="Father's Day (uk, us , ca)",  day=1, mon=6, year=self.year, offset=14, incToWeekDay=1)) 
+
+        self.addSpecialDay(SpecialDay(name="Halloween",  day=31, mon=10, year=self.year)) 
+
+        bOTB = SpecialDay(name="Battle of the Boyne (ni)",  day=12, mon=7, year=self.year)
+        self.addSpecialDay(bOTB) 
+        if bOTB.wd_norm == WeekDayNorm.SATURDAY or bOTB.wd_norm == WeekDayNorm.SUNDAY:
+            self.addSpecialDay(SpecialDay(name="Battle of the Boyne observed (ni)",  day=12, mon=7, year=self.year, incToWeekDay=2)) 
+        
+        self.addSpecialDay(SpecialDay(name="June Bank Holiday (ir)",            day=1, mon=6, year=self.year, incToWeekDay=2)) 
+        self.addSpecialDay(SpecialDay(name="Summer Bank Holiday (sc)",          day=1, mon=8, year=self.year, incToWeekDay=2)) 
+        self.addSpecialDay(SpecialDay(name="Summer Bank Holiday (eng,ni,wal)",  day=1, mon=9, year=self.year, offset=-7, incToWeekDay=2)) 
+         
+        self.addSpecialDay(SpecialDay(name="Mother's Day (uk)",          day=self.easter, offset=  -21))
+        self.addSpecialDay(SpecialDay(name="Guy Fawkes Day",             day=5, mon=11, year=self.year))
+        self.addSpecialDay(SpecialDay(name="Remembrance Sunday",         day=1, mon=11, year=self.year, offset=7, incToWeekDay=1))
+
+        self.addSpecialDay(SpecialDay(name="St Andrew's Day",         day=30, mon=11, year=self.year))
+        if self.specialDays["St Andrew's Day"].wd_norm == WeekDayNorm.SATURDAY or self.specialDays["St Andrew's Day"].wd_norm == WeekDayNorm.SUNDAY:
+            self.addSpecialDay(SpecialDay(name="St Andrew's Day observed (sc)", day= 30, mon= 11, year=self.year, incToWeekDay=2)) 
+ 
+        # If Boxing Day falls on a Saturday, the following Monday is a substitute bank holiday. 
+        # If Christmas Day falls on a Saturday, the following Monday and Tuesday are substitute bank holidays.
+        if self.specialDays["First christmasday"].wd_norm == WeekDayNorm.SATURDAY:
+            self.addSpecialDay(SpecialDay(name="Christmas Day observed (uk)", day= 25, mon= 12, year=self.year, incToWeekDay=2)) 
+            self.addSpecialDay(SpecialDay(name="Boxing Day observed (uk)", day= 25, mon= 12, year=self.year, incToWeekDay=3)) 
+        elif self.specialDays["Second christmasday"].wd_norm == WeekDayNorm.SATURDAY:
+            self.addSpecialDay(SpecialDay(name="Boxing Day observed (uk)", day= 25, mon= 12, year=self.year, incToWeekDay=2)) 
+
         # days to add
-        # UK https://de.wikipedia.org/wiki/Boxing_Day
         # US Birthday of Martin Luther King, Jr. - January 15–21 (Floating Monday)
         # US Washington's Birthday - February 15–21 (Floating Monday)
         # US Memorial Day - May 25–31 (Floating Monday)
@@ -143,24 +231,7 @@ class Year:
         # US Columbus Day - October 8–14 (Floating Monday)
         # US Veterans Day - November 11 (Fixed)
         # US Thanksgiving Day - November 22–28 (Floating Thursday)
-        # UK 2nd January (substitute day) (Scotland) https://www.timeanddate.com/holidays/uk/2nd-january
-        # UK 1 Mar	St. David's Day (Wales) https://www.timeanddate.com/holidays/uk/st-david-day
-        # UK 17 Mar	St Patrick's Day (Northern Ireland) https://www.timeanddate.com/holidays/uk/st-patricks-day
-        # UK 23 Apr	St. George's Day https://www.timeanddate.com/holidays/uk/st-george-day
-        # UK 3 May	Early May Bank Holiday https://www.timeanddate.com/holidays/uk/early-may-bank-holiday
-        # UK 31 May	Spring Bank Holiday https://www.timeanddate.com/holidays/uk/spring-bank-holiday
-        # UK 12 Jun	Queen's Birthday
-        # UK 12 Jul	Battle of the Boyne (Northern Ireland) https://www.timeanddate.com/holidays/uk/orangemen-day
-        # UK 2 Aug	Summer Bank Holiday (Scotland) https://www.timeanddate.com/holidays/uk/summer-bank-holiday
-        # UK 30 Aug	Summer Bank Holiday (ENG, NIR, WAL) https://www.timeanddate.com/holidays/uk/summer-bank-holiday
-        # 31 Oct	Halloween https://www.timeanddate.com/holidays/uk/halloween
-        # UK 5 Nov	Guy Fawkes Day https://www.timeanddate.com/holidays/uk/guy-fawkes-day
-        # UK 14 Nov	Remembrance Sunday https://www.timeanddate.com/holidays/uk/remembrance-sunday
-        # UK 30 Nov	St Andrew's Day (Scotland) https://www.timeanddate.com/holidays/uk/st-andrew-day
-        # UK 26 Dec	Boxing Day https://www.timeanddate.com/holidays/uk/boxing-day
-        # UK 27 Dec	Bank Holiday https://www.timeanddate.com/holidays/uk/bank-holiday-dec-27
-        # UK 28 Dec	Bank Holiday https://www.timeanddate.com/holidays/uk/bank-holiday-dec-28
-
+ 
     def isSpecialDay(self, day, mon):
         retval = list()
         for key, sDay in self.specialDays.items():
@@ -367,7 +438,10 @@ class SpecialDay(Day):
 
     @property
     def name(self):
-        return(cfg.TRANSLATE_DAY[self._name]['name'])
+        if self._name in cfg.TRANSLATE_DAY:
+            return(cfg.TRANSLATE_DAY[self._name]['name'])
+        else:
+            return self._name
 
     @name.setter
     def name(self, name):
@@ -375,7 +449,10 @@ class SpecialDay(Day):
 
     @property
     def type(self):
-        return(cfg.TRANSLATE_DAY[self._name]['type'])
+        if self._name in cfg.TRANSLATE_DAY:
+            return(cfg.TRANSLATE_DAY[self._name]['type'])
+        else:
+            return SpecialDayType.IGNORE
 
 def getEaster(yh, ys):
 
