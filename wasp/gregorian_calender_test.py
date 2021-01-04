@@ -7,8 +7,6 @@
 import logging
 import optparse
 from gregorian_calender import *
-import gregorian_calender_cfg_de as cfg
-
 
 # import pdb # debugging e.g. pdb.set_trace() for breakpoint
 LOGGING_LEVELS = {'critical': logging.CRITICAL,
@@ -40,7 +38,10 @@ def printCal( mon, year):
     y = Year(year) 
     calStr = ''
     calStr += f'{cfg.MONTH_NAMES[mon]} {year}\n'
-    calStr += 'KW Mo Di Mi Do Fr Sa So\n'
+    calStr += 'CW '
+    for wd in cfg.WEEK_DAYS:
+        calStr += cfg.WEEK_DAYS[wd][0:2] + ' '
+    calStr += '\n'
     d = Day(1, mon, year)
     while d.mon == mon:
         if d.cw < 10:

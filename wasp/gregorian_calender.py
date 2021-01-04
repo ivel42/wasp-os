@@ -27,7 +27,7 @@ class SpecialDayType():
     HOLIDAY  = 2
 
 import copy
-import gregorian_calender_cfg_de as cfg
+import gregorian_calender_cfg_uk as cfg
 
 class Year:
     def __init__(self, year):
@@ -131,6 +131,23 @@ class Year:
         # US Columbus Day - October 8–14 (Floating Monday)
         # US Veterans Day - November 11 (Fixed)
         # US Thanksgiving Day - November 22–28 (Floating Thursday)
+        # UK 2nd January (substitute day) (Scotland) https://www.timeanddate.com/holidays/uk/2nd-january
+        # UK 1 Mar	St. David's Day (Wales) https://www.timeanddate.com/holidays/uk/st-david-day
+        # UK 17 Mar	St Patrick's Day (Northern Ireland) https://www.timeanddate.com/holidays/uk/st-patricks-day
+        # UK 23 Apr	St. George's Day https://www.timeanddate.com/holidays/uk/st-george-day
+        # UK 3 May	Early May Bank Holiday https://www.timeanddate.com/holidays/uk/early-may-bank-holiday
+        # UK 31 May	Spring Bank Holiday https://www.timeanddate.com/holidays/uk/spring-bank-holiday
+        # UK 12 Jun	Queen's Birthday
+        # UK 12 Jul	Battle of the Boyne (Northern Ireland) https://www.timeanddate.com/holidays/uk/orangemen-day
+        # UK 2 Aug	Summer Bank Holiday (Scotland) https://www.timeanddate.com/holidays/uk/summer-bank-holiday
+        # UK 30 Aug	Summer Bank Holiday (ENG, NIR, WAL) https://www.timeanddate.com/holidays/uk/summer-bank-holiday
+        # 31 Oct	Halloween https://www.timeanddate.com/holidays/uk/halloween
+        # UK 5 Nov	Guy Fawkes Day https://www.timeanddate.com/holidays/uk/guy-fawkes-day
+        # UK 14 Nov	Remembrance Sunday https://www.timeanddate.com/holidays/uk/remembrance-sunday
+        # UK 30 Nov	St Andrew's Day (Scotland) https://www.timeanddate.com/holidays/uk/st-andrew-day
+        # UK 26 Dec	Boxing Day https://www.timeanddate.com/holidays/uk/boxing-day
+        # UK 27 Dec	Bank Holiday https://www.timeanddate.com/holidays/uk/bank-holiday-dec-27
+        # UK 28 Dec	Bank Holiday https://www.timeanddate.com/holidays/uk/bank-holiday-dec-28
 
     def isSpecialDay(self, day, mon):
         retval = list()
@@ -158,7 +175,7 @@ class Day:
         self.ys   = year %  100 # year - the last 2 digits
 
     def __str__(self): 
-        return f'{cfg.WEEK_DAYS.get(self.__wd__)} - {self.day}.{self.mon}.{self.year}'
+        return f'{cfg.WEEK_DAYS.get(self.wd_norm)} - {self.day}.{self.mon}.{self.year}'
 
     def __eq__(self, other):
         if self.day == other.day and self.mon == other.mon and self.year == other.year:
@@ -269,11 +286,11 @@ class Day:
 
     @property
     def weekday(self):
-        return cfg.WEEK_DAYS[self.__wd__]
+        return cfg.WEEK_DAYS[self.wd_norm]
 
     @property
     def weekdayShort(self):
-        return cfg.WEEK_DAYS[self.__wd__][0:2]
+        return cfg.WEEK_DAYS[self.wd_norm][0:2]
     
     @property
     def cw(self):
@@ -334,7 +351,7 @@ class SpecialDay(Day):
         if self.type == SpecialDayType.HOLIDAY:
             dtype = "holiday"
  
-        return f'{cfg.WEEK_DAYS.get(self.__wd__)} - {self.day}.{self.mon}.{self.year}{self.ys} - {self.name} - {dtype}' 
+        return f'{cfg.WEEK_DAYS.get(self.wd_norm)} - {self.day}.{self.mon}.{self.year}{self.ys} - {self.name} - {dtype}' 
 
     @property
     def name(self):
