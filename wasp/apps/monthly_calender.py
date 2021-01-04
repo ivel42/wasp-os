@@ -16,11 +16,18 @@ class MonthlyCalenderApp():
         self.lut = dict()
         self.lc = [ 0, 24] # lineOffset, lineInc
         self.tc = [10, 29] # tabOffset, tabInc
+        self.dDay = now[2]
+        self.tickCnt = 0
 
     def foreground(self):
         self._draw()
+        #wasp.system.request_tick(3000)
         wasp.system.request_event(wasp.EventMask.TOUCH |
                                   wasp.EventMask.SWIPE_UPDOWN)
+    def tick(self, ticks):
+        """Periodic callback to update the display."""
+        self.tickCnt += 1
+        self._updateDisplayDay()
 
     def swipe(self, event):
         if event[0] == wasp.EventType.UP:
@@ -38,46 +45,51 @@ class MonthlyCalenderApp():
         self._draw()
 
     def touch(self, event):
-        draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
- 
         x = event[1]
         y = event[2]
-
-        found = False
 
         for d in self.lut:
             ta = self.lut[d][0]
             li = self.lut[d][1]
             if self.tc[0]+self.tc[1]*ta <= x <= self.tc[0]+self.tc[1]*ta+self.tc[1]:
                 if self.lc[0]+self.lc[1]*li <= y <= self.lc[0]+self.lc[1]*li+self.lc[1]:
-                     found = True
+                     self.dDay = d
                      break
+        
+        self._updateDisplayDay()
+
+    def _updateDisplayDay(self):
+        draw = wasp.watch.drawable
+        hi =  wasp.system.theme('accent-hi')
+        mid = wasp.system.theme('accent-mid')
+        lo =  wasp.system.theme('accent-lo')
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
-        if found:
-            draw.set_font(fonts.sansMono18)
-            tmp = greg_cal.Year(self.year).isSpecialDay(d, self.mon)
-            if len(tmp) == 0:
+        draw.set_font(fonts.sansMono18)
+        tmp = greg_cal.Year(self.year).isSpecialDay(self.dDay, self.mon)
+        if len(tmp) < 2:
+            wasp.system.request_tick(60000)
+        else:
+            wasp.system.request_tick(2000)
+        if len(tmp) == 0:
+            draw.set_color(lo)
+            draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 190, width=240)
+        else:
+            dIdx = self.tickCnt = self.tickCnt % len(tmp)
+            info_line = 0
+            item = tmp[dIdx]
+            s = item.name
+            if item.type == greg_cal.SpecialDayType.IGNORE:
                 draw.set_color(lo)
-                draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 190, width=240)
-            else:
-                info_line = 0
-                for item in tmp:
-                    s = item.name
-                    if item.type == greg_cal.SpecialDayType.IGNORE:
-                        continue
-                    if item.type == greg_cal.SpecialDayType.INFO_DAY:
-                        draw.set_color(greg_cal.dayColors['infoday'])
-                    if item.type == greg_cal.SpecialDayType.HOLIDAY:
-                        draw.set_color(greg_cal.dayColors['holiday'])
-                    chunks = draw.wrap(s, 240)
-                    for i in range(len(chunks)-1):
-                        sub = s[chunks[i]:chunks[i+1]].rstrip()
-                        draw.string(sub, 0, 190+self.lc[1]*info_line, width=240)
-                        info_line += 1
+            if item.type == greg_cal.SpecialDayType.INFO_DAY:
+                draw.set_color(greg_cal.dayColors['infoday'])
+            if item.type == greg_cal.SpecialDayType.HOLIDAY:
+                draw.set_color(greg_cal.dayColors['holiday'])
+            chunks = draw.wrap(s, 240)
+            for i in range(len(chunks)-1):
+                sub = s[chunks[i]:chunks[i+1]].rstrip()
+                draw.string(sub, 0, 190+self.lc[1]*info_line, width=240)
+                info_line += 1
 
     def _draw(self):
         draw = wasp.watch.drawable
@@ -131,3 +143,5 @@ class MonthlyCalenderApp():
                     line += 1
                     tab = 0
                     break
+        
+        self._updateDisplayDay()
