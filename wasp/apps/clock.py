@@ -47,6 +47,10 @@ class ClockApp():
         self.year = greg_cal.Year(now[0])
         self.calDay = greg_cal.Day(now[2], now[1], now[0])
 
+        self.dDayIdx = 0
+        self._tickDivider = 2
+        self._tick = 0
+
     def foreground(self):
         """Activate the application.
 
@@ -82,7 +86,14 @@ class ClockApp():
 
     def tick(self, ticks):
         """Periodic callback to update the display."""
+        self._tick += 1
+        if self._tick >= self._tickDivider:
+            self._tick = 0
+            self.dDayIdx += 1
+            self._updateDisplayDay()
+
         self._draw()
+        
 
     def _clear(self):
         draw = wasp.watch.drawable
@@ -92,7 +103,7 @@ class ClockApp():
 
         # Clear the display and draw that static parts of the watch face
         draw.fill()
-        draw.blit(digits.clock_colon, 2*48, 40, fg=mid)
+        draw.blit(digits.clock_colon, 2*48, 80, fg=mid)
 
         # Redraw the status bar
         wasp.system.bar.draw()
@@ -150,30 +161,44 @@ class ClockApp():
         draw.set_color(mid)
         draw.set_font(fonts.sans24)
         draw.string('{} {} {}.{}.{}'.format(d.cw, d.weekdayShort, d.day, d.mon, d.year),
-                0, 110, width=240)
+                0, 160, width=240)
         
         # draw date info
+        self._updateDisplayDay()
+
+    def _updateDisplayDay(self):
+        draw = wasp.watch.drawable
+        hi =  wasp.system.theme('accent-hi')
+        mid = wasp.system.theme('accent-mid')
+        lo =  wasp.system.theme('accent-lo')
+        d = self.calDay
+
+        draw.fill(x=0, y=190, w=240, h=240-190) 
         draw.set_font(fonts.sansMono18)
-        info_line = 0
         tmp = self.year.isSpecialDay(d.day, d.mon)
+        if len(tmp) < 2:
+            self._tickDivider = 60
+        else:
+            self._tickDivider = 2
         if len(tmp) == 0:
             draw.set_color(lo)
-            draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 140+24*info_line, width=240)
-            info_line += 1
+            draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 190, width=240)
         else:
-            for item in tmp:
-                s = item.name
-                if item.type == greg_cal.SpecialDayType.IGNORE:
-                    continue
-                if item.type == greg_cal.SpecialDayType.INFO_DAY:
-                    draw.set_color(greg_cal.dayColors['infoday'])
-                if item.type == greg_cal.SpecialDayType.HOLIDAY:
-                    draw.set_color(greg_cal.dayColors['holiday'])
-                chunks = draw.wrap(s, 240)
-                for i in range(len(chunks)-1):
-                    sub = s[chunks[i]:chunks[i+1]].rstrip()
-                    draw.string(sub, 0, 140+24*info_line, width=240)
-                    info_line += 1
+            dIdx = self.dDayIdx = self.dDayIdx % len(tmp)
+            info_line = 0
+            item = tmp[dIdx]
+            s = item.name
+            if item.type == greg_cal.SpecialDayType.IGNORE:
+                draw.set_color(lo)
+            if item.type == greg_cal.SpecialDayType.INFO_DAY:
+                draw.set_color(greg_cal.dayColors['infoday'])
+            if item.type == greg_cal.SpecialDayType.HOLIDAY:
+                draw.set_color(greg_cal.dayColors['holiday'])
+            chunks = draw.wrap(s, 240)
+            for i in range(len(chunks)-1):
+                sub = s[chunks[i]:chunks[i+1]].rstrip()
+                draw.string(sub, 0, 190+24*info_line, width=240)
+                info_line += 1
 
     def _drawPerMin(self, now):
  
@@ -183,13 +208,14 @@ class ClockApp():
         lo =  wasp.system.theme('accent-lo')
  
         # Draw the changeable parts of the watch face
-        draw.blit(DIGITS[now[4]  % 10], 4*48, 40, fg=hi)
-        draw.blit(DIGITS[now[4] // 10], 3*48, 40, fg=lo)
-        draw.blit(DIGITS[now[3]  % 10], 1*48, 40, fg=hi)
-        draw.blit(DIGITS[now[3] // 10], 0*48, 40, fg=lo)
+        draw.blit(DIGITS[now[4]  % 10], 4*48, 80, fg=hi)
+        draw.blit(DIGITS[now[4] // 10], 3*48, 80, fg=lo)
+        draw.blit(DIGITS[now[3]  % 10], 1*48, 80, fg=hi)
+        draw.blit(DIGITS[now[3] // 10], 0*48, 80, fg=lo)
 
     def touch(self, event):
-        self._fakeTime = True
+        pass
+        #self._fakeTime = True
     
     def getFakeTime(self):
         fake_now = [ 1848, 12, 31, 23, 59 ]

@@ -17,16 +17,15 @@ class MonthlyCalenderApp():
         self.lc = [ 0, 24] # lineOffset, lineInc
         self.tc = [10, 29] # tabOffset, tabInc
         self.dDay = now[2]
-        self.tickCnt = 0
+        self.dDayIdx = 0
 
     def foreground(self):
         self._draw()
-        #wasp.system.request_tick(3000)
         wasp.system.request_event(wasp.EventMask.TOUCH |
                                   wasp.EventMask.SWIPE_UPDOWN)
     def tick(self, ticks):
-        """Periodic callback to update the display."""
-        self.tickCnt += 1
+        """Periodic callback to update the display day."""
+        self.dDayIdx += 1
         self._updateDisplayDay()
 
     def swipe(self, event):
@@ -75,7 +74,7 @@ class MonthlyCalenderApp():
             draw.set_color(lo)
             draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 190, width=240)
         else:
-            dIdx = self.tickCnt = self.tickCnt % len(tmp)
+            dIdx = self.dDayIdx = self.dDayIdx % len(tmp)
             info_line = 0
             item = tmp[dIdx]
             s = item.name
