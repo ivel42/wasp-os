@@ -58,7 +58,7 @@ class MonthlyCalenderApp():
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
         if found:
-            draw.set_font(fonts.sans17)
+            draw.set_font(fonts.sansMono18)
             tmp = greg_cal.Year(self.year).isSpecialDay(d, self.mon)
             if len(tmp) == 0:
                 draw.set_color(lo)
@@ -87,7 +87,7 @@ class MonthlyCalenderApp():
 
         draw.fill()
         draw.set_color(hi)
-        draw.set_font(fonts.sans17)
+        draw.set_font(fonts.sansMono18)
 
         line = 0
         tab = 0

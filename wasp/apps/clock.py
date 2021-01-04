@@ -153,7 +153,7 @@ class ClockApp():
                 0, 110, width=240)
         
         # draw date info
-        draw.set_font(fonts.sans17)
+        draw.set_font(fonts.sansMono18)
         info_line = 0
         tmp = self.year.isSpecialDay(d.day, d.mon)
         if len(tmp) == 0:
