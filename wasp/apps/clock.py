@@ -35,9 +35,6 @@ class ClockApp():
     ICON = icons.clock
 
     def __init__(self):
-        self._fakeTime = False
-        self._fakeDay = greg_cal.Day(31, 12, 1848)
-
         self._min = -1
         self._day = -1
         self._year = -1
@@ -60,13 +57,7 @@ class ClockApp():
         wasp.system.bar.clock = False
         self._draw(True)
         wasp.system.request_tick(1000)
-        wasp.system.request_event(wasp.EventMask.TOUCH)
-
-        draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
-
+ 
     def sleep(self):
         """Prepare to enter the low power mode.
 
@@ -93,8 +84,7 @@ class ClockApp():
             self._updateDisplayDay()
 
         self._draw()
-        
-
+ 
     def _clear(self):
         draw = wasp.watch.drawable
         hi =  wasp.system.theme('accent-hi')
@@ -116,14 +106,11 @@ class ClockApp():
         True then a full redraw is be performed.
         """
 
-        if self._fakeTime:
-            now = self.getFakeTime()
-        else:
-            # The update is doubly lazy... we update the status bar and if
-            # the status bus update reports a change in the time of day 
-            # then we compare the minute on display to make sure we 
-            # only update the main clock once per minute.
-            now = wasp.system.bar.update()
+        # The update is doubly lazy... we update the status bar and if
+        # the status bus update reports a change in the time of day 
+        # then we compare the minute on display to make sure we 
+        # only update the main clock once per minute.
+        now = wasp.system.bar.update()
         
         if now and (redraw or (self._day != now[2])):
             # Record the day that is currently being displayed
@@ -212,16 +199,3 @@ class ClockApp():
         draw.blit(DIGITS[now[4] // 10], 3*48, 80, fg=lo)
         draw.blit(DIGITS[now[3]  % 10], 1*48, 80, fg=hi)
         draw.blit(DIGITS[now[3] // 10], 0*48, 80, fg=lo)
-
-    def touch(self, event):
-        pass
-        #self._fakeTime = True
-    
-    def getFakeTime(self):
-        fake_now = [ 1848, 12, 31, 23, 59 ]
-        self._fakeDay.increment(1)
-        fake_now[0] = self._fakeDay.year
-        fake_now[1] = self._fakeDay.mon
-        fake_now[2] = self._fakeDay.day
-        return fake_now
-      
