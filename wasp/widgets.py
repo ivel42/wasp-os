@@ -221,11 +221,16 @@ class Checkbox():
         self._im = (x, y, label)
         self.state = False
 
+    @property
+    def label(self):
+        return self._im[2]
+
     def draw(self):
         """Draw the checkbox and label."""
         draw = wasp.watch.drawable
         im = self._im
         if im[2]:
+            draw.set_color(wasp.system.theme('bright'))
             draw.set_font(fonts.sans24)
             draw.string(im[2], im[0], im[1]+6)
         self.update()
@@ -235,13 +240,13 @@ class Checkbox():
         draw = wasp.watch.drawable
         im = self._im
         if self.state:
-            c1 = wasp.system.theme('slider-default')
-            c2 = draw.lighten(c1, 15)
+            c1 = wasp.system.theme('ui')
+            c2 = draw.lighten(c1, wasp.system.theme('contrast'))
             fg = c2
         else:
             c1 = 0
             c2 = 0
-            fg = wasp.system.theme('accent-lo')
+            fg = wasp.system.theme('mid')
         # Draw checkbox on the right margin if there is a label, otherwise
         # draw at the natural location
         x = 239 - 32 - 4 if im[2] else im[0]
@@ -283,10 +288,10 @@ class Slider():
         y = self._y
         color = self._color
         if self._color is None:
-            self._color = wasp.system.theme('slider-default')
+            self._color = wasp.system.theme('ui')
             color = self._color
         if self._lowlight is None:
-            self._lowlight = draw.lighten(color, 15)
+            self._lowlight = draw.lighten(color, wasp.system.theme('contrast'))
         light = self._lowlight
 
         knob_x = x + ((_SLIDER_TRACK * self.value) // (self._steps-1))
@@ -344,7 +349,7 @@ class Spinner():
         """Draw the slider."""
         draw = watch.drawable
         im = self._im
-        fg = draw.lighten(wasp.system.theme('slider-default'), 15)
+        fg = draw.lighten(wasp.system.theme('ui'), wasp.system.theme('contrast'))
         draw.blit(icons.up_arrow, im[0]+30-8, im[1]+20, fg)
         draw.blit(icons.down_arrow, im[0]+30-8, im[1]+120-20-9, fg)
         self.update()
@@ -353,6 +358,7 @@ class Spinner():
         """Update the spinner value."""
         draw = watch.drawable
         im = self._im
+        draw.set_color(wasp.system.theme('bright'))
         draw.set_font(fonts.sans28)
         s = str(self.value)
         if len(s) < im[4]:
@@ -378,76 +384,30 @@ class Spinner():
 
         return False
 
-_message_string_x_coord = const(0)
-_message_string_y_coord = const(60)
-_yes_button_x_coord = const(20)
-_yes_button_y_coord = const(100)
-_no_button_x_coord = const(120)
-_no_button_y_coord = const(100)
-
 class ConfirmationView:
     """Confirmation widget allowing user confirmation of a setting."""
 
     def __init__(self):
         self.active = False
-
-        self.yes_button_bounds = (
-            (_yes_button_x_coord, _yes_button_y_coord),
-            (
-                icons.yes_button[0] + _yes_button_x_coord,
-                icons.yes_button[1] + _yes_button_y_coord,
-            ),
-        )
-        self.no_button_bounds = (
-            (_no_button_x_coord, _no_button_y_coord),
-            (
-                icons.no_button[0] + _no_button_x_coord,
-                icons.no_button[1] + _no_button_y_coord,
-            )
-        )
+        self.value = False
 
     def draw(self, message):
-        wasp.watch.drawable.fill(1)
-        wasp.watch.drawable.string(
-            message,
-            _message_string_x_coord,
-            _message_string_y_coord
-        )
-        wasp.watch.drawable.blit(
-            icons.yes_button,
-            _yes_button_x_coord,
-            _yes_button_y_coord,
-        )
-        wasp.watch.drawable.blit(
-            icons.no_button,
-            _no_button_x_coord,
-            _no_button_y_coord,
-        )
         self.active = True
-
+        wasp.watch.drawable.fill(1)
+        wasp.watch.drawable.string(message, 0, 60)
+        wasp.watch.drawable.blit(icons.yes_button, 20, 100)
+        wasp.watch.drawable.blit(icons.no_button, 120, 100)
 
     def touch(self, event):
-        x_coord = event[1]
-        y_coord = event[2]
-        is_yes_button_press = (
-            x_coord > self.yes_button_bounds[0][0]
-            and y_coord > self.yes_button_bounds[0][1]
-            and x_coord < self.yes_button_bounds[1][0]
-            and y_coord < self.yes_button_bounds[1][1]
-        )
-
-        is_no_button_press = (
-            x_coord > self.no_button_bounds[0][0]
-            and y_coord > self.no_button_bounds[0][1]
-            and x_coord < self.no_button_bounds[1][0]
-            and y_coord < self.no_button_bounds[1][1]
-        )
-
-        if is_yes_button_press:
-            self.active = False
-            return True
-        elif is_no_button_press:
-            self.active = False
+        if not self.active:
             return False
-        else:
-            return None
+
+        x = event[1]
+        y = event[2]
+
+        if y >= 80 and y < 180:
+            self.active = False
+            self.value = x < 120
+            return True
+
+        return False

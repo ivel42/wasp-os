@@ -51,7 +51,7 @@ class StepCounterApp():
         Cancelling the alarm has two effects. Firstly it ensures the
         step count won't change whilst we are watching it and, secondly
         it ensures that if the time of day has been set to a value in
-        the past the we reconfigure the alarm.
+        the past that we reconfigure the alarm.
 
         This does in the side effect that if the application of open at
         midnight then the reset doesn't happen for that day.
@@ -102,5 +102,5 @@ class StepCounterApp():
         t = str(count)
         w = fonts.width(fonts.sans36, t)
         draw.set_font(fonts.sans36)
-        draw.set_color(0xfff0)
+        draw.set_color(draw.lighten(wasp.system.theme('spot1'), wasp.system.theme('contrast')))
         draw.string(t, 228-w, 132-18)

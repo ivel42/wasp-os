@@ -125,9 +125,9 @@ class ClockApp():
 
     def _drawPerDay(self, now):
         draw = wasp.watch.drawable
-        hi =  wasp.system.theme('accent-hi')
-        mid = wasp.system.theme('accent-mid')
-        lo =  wasp.system.theme('accent-lo')
+        hi =  wasp.system.theme('bright')
+        lo =  wasp.system.theme('mid')
+        mid = draw.lighten(lo, 1)
 
         # update calender
         if self._day == now[2]:

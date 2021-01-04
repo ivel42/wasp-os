@@ -21,12 +21,12 @@ import watch
 import widgets
 
 from apps.clock import ClockApp
-from apps.flashlight import FlashlightApp
 from apps.heart import HeartApp
 from apps.launcher import LauncherApp
 from apps.pager import PagerApp, CrashApp, NotificationApp
 from apps.settings import SettingsApp
 from apps.steps import StepCounterApp
+from apps.software import SoftwareApp
 from apps.stopwatch import StopwatchApp
 from apps.testapp import TestApp
 from apps.monthly_calender import MonthlyCalenderApp
@@ -118,7 +118,19 @@ class Manager():
         self.musicstate = {}
         self.musicinfo = {}
 
-        self._theme = b'\xef{\xef{\xef{<\xe7\xef{\xb6\xb5\xb6\xbd\xff\xff\xff9'
+        self._theme = (
+                b'\x7b\xef'     # ble
+                b'\x7b\xef'     # scroll-indicator
+                b'\x7b\xef'     # battery
+                b'\xe7\x3c'     # status-clock
+                b'\x7b\xef'     # notify-icon
+                b'\xff\xff'     # bright
+                b'\xbd\xb6'     # mid
+                b'\x39\xff'     # ui
+                b'\xff\x00'     # spot1
+                b'\xdd\xd0'     # spot2
+                b'\x00\x0f'     # contrast
+        )
 
         self.blank_after = 15
 
@@ -141,9 +153,8 @@ class Manager():
                          (StepCounterApp, True),
                          (StopwatchApp, True),
                          (HeartApp, True),
-                         (FlashlightApp, False),
-                         (SettingsApp, False),
-                         (TestApp, False) ):
+                         (SoftwareApp, False),
+                         (SettingsApp, False) ):
             try:
                 self.register(app(), qr)
             except:
@@ -161,6 +172,12 @@ class Manager():
         else:
             self.launcher_ring.append(app)
             self.launcher_ring.sort(key = _key_app)
+
+    def unregister(self, cls):
+        for app in self.launcher_ring:
+            if instanceof(app, cls):
+                self.launcher_ring.remove(app)
+                break
 
     @property
     def brightness(self):
@@ -534,13 +551,15 @@ class Manager():
                        "battery",
                        "status-clock",
                        "notify-icon",
-                       "accent-mid",
-                       "accent-lo",
-                       "accent-hi",
-                       "slider-default")
+                       "bright",
+                       "mid",
+                       "ui",
+                       "spot1",
+                       "spot2",
+                       "contrast")
         if theme_part not in theme_parts:
             raise IndexError('Theme part {} does not exist'.format(theme_part))
         idx = theme_parts.index(theme_part) * 2
-        return self._theme[idx] | (self._theme[idx+1] << 8)
+        return (self._theme[idx] << 8) | self._theme[idx+1]
 
 system = Manager()

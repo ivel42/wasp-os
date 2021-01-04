@@ -17,25 +17,29 @@ class DefaultTheme():
     BATTERY_COLOR = 0x7bef
     SMALL_CLOCK_COLOR = 0xe73c
     NOTIFICATION_COLOR = 0x7bef
-    ACCENT_MID = 0xb5b6
-    ACCENT_LO = 0xbdb6
-    ACCENT_HI = 0xffff
-    SLIDER_DEFAULT_COLOR = 0x39ff
+    BRIGHT = 0xffff
+    MID = 0xbdb6
+    UI = 0x39ff
+    SPOT1 = 0xff00
+    SPOT2 = 0xddd0
+    CONTRAST = 15
 
     def serialize(self) -> bytes:
         """Serializes the theme for use in wasp-os"""
         def split_bytes(x: int) -> Tuple[int, int]:
-            return (x & 0xFF, (x >> 8) & 0xFF)
+            return ((x >> 8) & 0xFF, x & 0xFF)
         theme_bytes = bytes([
             *split_bytes(self.BLE_COLOR),
             *split_bytes(self.SCROLL_INDICATOR_COLOR),
             *split_bytes(self.BATTERY_COLOR),
             *split_bytes(self.SMALL_CLOCK_COLOR),
             *split_bytes(self.NOTIFICATION_COLOR),
-            *split_bytes(self.ACCENT_MID),
-            *split_bytes(self.ACCENT_LO),
-            *split_bytes(self.ACCENT_HI),
-            *split_bytes(self.SLIDER_DEFAULT_COLOR),
+            *split_bytes(self.BRIGHT),
+            *split_bytes(self.MID),
+            *split_bytes(self.UI),
+            *split_bytes(self.SPOT1),
+            *split_bytes(self.SPOT2),
+            *split_bytes(self.CONTRAST)
         ])
         return theme_bytes
 
