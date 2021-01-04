@@ -158,7 +158,7 @@ class ClockApp():
         tmp = self.year.isSpecialDay(d.day, d.mon)
         if len(tmp) == 0:
             draw.set_color(lo)
-            draw.string('no special day', 0, 140+24*info_line, width=240)
+            draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 140+24*info_line, width=240)
             info_line += 1
         else:
             for item in tmp:
@@ -166,9 +166,9 @@ class ClockApp():
                 if item.type == greg_cal.SpecialDayType.IGNORE:
                     continue
                 if item.type == greg_cal.SpecialDayType.INFO_DAY:
-                    draw.set_color(lo)
+                    draw.set_color(greg_cal.dayColors['infoday'])
                 if item.type == greg_cal.SpecialDayType.HOLIDAY:
-                    draw.set_color(hi)
+                    draw.set_color(greg_cal.dayColors['holiday'])
                 chunks = draw.wrap(s, 240)
                 for i in range(len(chunks)-1):
                     sub = s[chunks[i]:chunks[i+1]].rstrip()

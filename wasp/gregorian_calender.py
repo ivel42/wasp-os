@@ -26,6 +26,18 @@ class SpecialDayType():
     INFO_DAY = 1
     HOLIDAY  = 2
 
+colors = {'white'  : 0xffff,
+          'red'    : 0xf800,
+          'yellow' : 0xffe0,
+          'green'  : 0x07e0, 
+          'cyan'   : 0x07ff,
+          'blue'   : 0xffff,
+          'magenta': 0xf81f}
+
+dayColors = {'sunday'  : colors['red'],
+             'holiday' : colors['magenta'],
+             'infoday' : colors['cyan']}
+
 import copy
 import gregorian_calender_cfg_uk as cfg
 

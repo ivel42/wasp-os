@@ -30,6 +30,8 @@ MONTH_NAMES = {1: 'Januar',
               11: 'November',
               12: 'Dezember'}
 
+NO_SPECIAL_DAY = 'Normaler Tag'
+
 TRANSLATE_DAY = {
     "Women's Shrovetide"            : {"name" : "Weiberfastnacht"          , "type":SpecialDayType.INFO_DAY } ,       
     "Carnival Monday"               : {"name" : "Rosenmontag"              , "type":SpecialDayType.INFO_DAY } , 

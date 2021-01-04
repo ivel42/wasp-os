@@ -62,7 +62,7 @@ class MonthlyCalenderApp():
             tmp = greg_cal.Year(self.year).isSpecialDay(d, self.mon)
             if len(tmp) == 0:
                 draw.set_color(lo)
-                draw.string('no special day', 0, 190, width=240)
+                draw.string(greg_cal.cfg.NO_SPECIAL_DAY, 0, 190, width=240)
             else:
                 info_line = 0
                 for item in tmp:
@@ -70,9 +70,9 @@ class MonthlyCalenderApp():
                     if item.type == greg_cal.SpecialDayType.IGNORE:
                         continue
                     if item.type == greg_cal.SpecialDayType.INFO_DAY:
-                        draw.set_color(lo)
+                        draw.set_color(greg_cal.dayColors['infoday'])
                     if item.type == greg_cal.SpecialDayType.HOLIDAY:
-                        draw.set_color(hi)
+                        draw.set_color(greg_cal.dayColors['holiday'])
                     chunks = draw.wrap(s, 240)
                     for i in range(len(chunks)-1):
                         sub = s[chunks[i]:chunks[i+1]].rstrip()
@@ -116,11 +116,11 @@ class MonthlyCalenderApp():
             while d.mon == self.mon:
                 dType = y.specialDayType(d.day, d.mon)
                 if dType == greg_cal.SpecialDayType.HOLIDAY: 
-                    draw.set_color(hi)
-                elif d.wd_norm == 6: # So
-                    draw.set_color(mid)
+                    draw.set_color(greg_cal.dayColors['holiday'])
                 elif dType == greg_cal.SpecialDayType.INFO_DAY: 
-                    draw.set_color(mid)
+                    draw.set_color(greg_cal.dayColors['infoday'])
+                elif d.wd_norm == 6: # So
+                    draw.set_color(greg_cal.dayColors['sunday'])
                 else:
                     draw.set_color(lo)
                 draw.string(f'{d.day}', self.tc[0]+self.tc[1]*tab, self.lc[0]+self.lc[1]*line, width=self.tc[1])
