@@ -205,7 +205,7 @@ class TestApp():
         t = machine.Timer(id=1, period=8000000)
         t.start()
         draw = wasp.watch.drawable
-        s = 'This\nis a very long string that will need to be wrappedinmultipledifferentways!'
+        s = 'This\nis a very long string that will need to be wrappedinmultipledifferentways! !'
         chunks = draw.wrap(s, 240)
 
         for i in range(len(chunks)-1):

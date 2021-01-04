@@ -368,6 +368,8 @@ class Draw565(object):
                     break
             if end <= start:
                 end = i
+            if l <= width: # if s fits in this line
+                end = i+1
             chunks.append(end)
 
         return chunks
