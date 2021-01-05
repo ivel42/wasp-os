@@ -48,7 +48,7 @@ dayColors = {'sunday'  : colors['red'],
              'infoday' : colors['cyan']}
 
 import copy
-import gregorian_calender_cfg_de as cfg
+import gregorian_calender_cfg_uk as cfg
 
 class Year:
     def __init__(self, year):
@@ -222,15 +222,29 @@ class Year:
         elif self.specialDays["Second christmasday"].wd_norm == WeekDayNorm.SATURDAY:
             self.addSpecialDay(SpecialDay(name="Boxing Day observed (uk)", day= 25, mon= 12, year=self.year, incToWeekDay=2)) 
 
-        # days to add
-        # US Birthday of Martin Luther King, Jr. - January 15–21 (Floating Monday)
-        # US Washington's Birthday - February 15–21 (Floating Monday)
-        # US Memorial Day - May 25–31 (Floating Monday)
-        # US Independence Day - July 4 (Fixed)
-        # US Labor Day - September 1–7 (Floating Monday)
-        # US Columbus Day - October 8–14 (Floating Monday)
-        # US Veterans Day - November 11 (Fixed)
-        # US Thanksgiving Day - November 22–28 (Floating Thursday)
+        self.addSpecialDay(SpecialDay(name="Birthday of Martin Luther King, Jr", day=15, mon= 1, year=self.year, incToWeekDay=2))
+        self.addSpecialDay(SpecialDay(name="Washington's Birthday",              day=15, mon= 2, year=self.year, incToWeekDay=2))
+        self.addSpecialDay(SpecialDay(name="Memorial Day (us)",                  day=25, mon= 5, year=self.year, incToWeekDay=2))
+
+        # If July 4 is a Saturday, it is observed on Friday, July 3. If July 4 is a Sunday, it is observed on Monday, July 5
+        self.addSpecialDay(SpecialDay(name="US Independence Day",                day= 4, mon= 7, year=self.year))
+        if self.specialDays["US Independence Day"].wd_norm == WeekDayNorm.SATURDAY:
+            self.addSpecialDay(SpecialDay(name="US Independence Day observed", day= 4, mon= 7, year=self.year, offset=-1)) 
+        if self.specialDays["US Independence Day"].wd_norm == WeekDayNorm.SUNDAY:
+            self.addSpecialDay(SpecialDay(name="US Independence Day observed", day= 4, mon= 7, year=self.year, offset=1)) 
+
+        self.addSpecialDay(SpecialDay(name="Labor Day (us)",                     day= 1, mon= 9, year=self.year, incToWeekDay=2))
+        self.addSpecialDay(SpecialDay(name="Columbus Day",                       day= 8, mon=10, year=self.year, incToWeekDay=2))
+
+        # If Veterans Day falls on a Saturday, they are closed on Friday November 10. If Veterans Day falls on a Sunday, they are closed on Monday November 12.
+        self.addSpecialDay(SpecialDay(name="Veterans Day (us)",                  day=11, mon=11, year=self.year))
+        if self.specialDays["Veterans Day (us)"].wd_norm == WeekDayNorm.SATURDAY:
+            self.addSpecialDay(SpecialDay(name="Veterans Day (us) observed", day=11, mon=11, year=self.year, offset=-1)) 
+        if self.specialDays["Veterans Day (us)"].wd_norm == WeekDayNorm.SUNDAY:
+            self.addSpecialDay(SpecialDay(name="Veterans Day (us) observed", day=11, mon=11, year=self.year, offset=1)) 
+
+        self.addSpecialDay(SpecialDay(name="Thanksgiving (us)", day=22, mon=11, year=self.year, incToWeekDay=5))
+        self.addSpecialDay(SpecialDay(name="Juneteenth (us)",   day=19, mon= 6, year=self.year))
  
     def isSpecialDay(self, day, mon):
         retval = list()
