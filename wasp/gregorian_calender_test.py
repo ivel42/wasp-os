@@ -91,7 +91,7 @@ def checkMoCw1(calYear, day, mon, year):
     """
     pass
     test = getMoCw1(calYear.year)
-    if(test.__wd__ != 2):
+    if(test.wd_norm != WeekDayNorm.MONDAY):
         logging.error('not monday!')
     elif test.year != year:
         logging.error('wrong year!')
@@ -141,10 +141,10 @@ def main():
     logging.info('Logging Lever set to ' + str(logging_level))
 
     easter = getEaster(20, 21)
-    logging.info(f'Easter is on {cfg.WEEK_DAYS.get(easter.__wd__)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
+    logging.info(f'Easter is on {cfg.WEEK_DAYS.get(easter.wd_norm)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
 
     easter = getEaster(20, 20)
-    logging.info(f'Easter is on {cfg.WEEK_DAYS.get(easter.__wd__)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
+    logging.info(f'Easter is on {cfg.WEEK_DAYS.get(easter.wd_norm)} - {easter.day}.{easter.mon}.{easter.yh}{easter.year}')
 
     year = Year(2020)
 
