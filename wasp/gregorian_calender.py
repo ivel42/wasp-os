@@ -48,13 +48,33 @@ dayColors = {'sunday'  : colors['red'],
              'infoday' : colors['cyan']}
 
 import copy
+import machine
 import gregorian_calender_cfg_uk as cfg
 
 class Year:
+    _instance = None
+
+    def __new__(cls, year):
+        if cls._instance is None:
+            # Creating the object for Year - Singleton
+            # see https://python-patterns.guide/gang-of-four/singleton/
+            cls._instance = super(Year, cls).__new__(cls)
+            # Put any initialization here.
+            cls.specialDays = dict()
+            cls.year = -1
+        return cls._instance
+
     def __init__(self, year):
-        self.year = year
-        self.specialDays = dict()
-        self.update()
+        if(self.year != year):
+            print(f'Year: Change the year to {year}')
+            t = machine.Timer(id=1, period=8000000)
+            t.start()
+            self.year = year
+            self.update()
+            elapsed = t.time()
+            t.stop()
+            del t
+            print('took {}s'.format(elapsed / 1000000))
 
     def __str__(self):
         return f'{self.year}'

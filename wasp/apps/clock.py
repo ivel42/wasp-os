@@ -41,7 +41,6 @@ class ClockApp():
 
         # init the calender
         now = wasp.watch.rtc.get_localtime()
-        self.year = greg_cal.Year(now[0])
         self.calDay = greg_cal.Day(now[2], now[1], now[0])
 
         self.dDayIdx = 0
@@ -140,7 +139,6 @@ class ClockApp():
         self._day = now[2]
 
         if self._year != now[0]:
-            self.year = greg_cal.Year(now[0])
             self._year = now[0]
 
         # draw current date
@@ -162,7 +160,7 @@ class ClockApp():
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
         draw.set_font(fonts.sansMono18)
-        tmp = self.year.isSpecialDay(d.day, d.mon)
+        tmp = greg_cal.Year(self._year).isSpecialDay(d.day, d.mon)
         if len(tmp) < 2:
             self._tickDivider = 60
         else:
