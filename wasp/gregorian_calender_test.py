@@ -148,7 +148,7 @@ def main():
 
     year = Year(2020)
 
-    for key, value in year.specialDays.items():
+    for key, value in year._specialDaysDict.items():
         print(key + ' | ' + str(value))
 
   
