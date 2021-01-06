@@ -10,6 +10,7 @@ For calculation the calender formulas of Christian Zeller will be used.
 """
 
 # Dictionary for the number of days per month - note the missing february
+# is is calculated by getDaysPerMonth() because of leap years
 DAYS_PER_MONTH = { 1: 31,
                    3: 31,
                    4: 30,
@@ -64,6 +65,14 @@ except:
     pass
 
 class Year:
+    """
+       
+       Warning: This class is a Singleton!
+       It is like that to spare memory and processing time.
+       If you store **the** reference someone else might change the year!
+       So better keep it on the stack - maybe we have to protect us
+       from getting interrupted when it is more wildly used.
+    """
     _instance = None
 
     def __new__(cls, year):
@@ -72,7 +81,6 @@ class Year:
             # see https://python-patterns.guide/gang-of-four/singleton/
             cls._instance = super(Year, cls).__new__(cls)
             # Put any initialization here.
-            cls._specialDaysDict = dict()
             cls._year = -1
         return cls._instance
 
@@ -85,6 +93,11 @@ class Year:
             except:
                 pass
             self._year = year
+            try:
+                del self._specialDaysDict
+            except:
+                pass
+            self._specialDaysDict = dict()
             self._update()
             try:
                 elapsed = t.time()
@@ -95,14 +108,23 @@ class Year:
                 pass
  
     def __str__(self):
-        return f'{self._year}'
+        retVal = ''
+        for sDayList in self._specialDaysDict.values():
+            for sDay in sDayList:
+                retVal += str(sDay) + '\n'
+
+        return retVal
 
     @property
     def year(self):
         return self._year
 
     def _addSpecialDay(self, specialDay):
-        self._specialDaysDict[specialDay._name] = specialDay
+
+        if specialDay.dateKey not in self._specialDaysDict:
+            self._specialDaysDict[specialDay.dateKey] = list()
+
+        self._specialDaysDict[specialDay.dateKey].append(specialDay)
 
     def _update(self):
 
@@ -186,13 +208,13 @@ class Year:
         # The holiday on 1 January (or 2 January if 1 January is Sunday) is statutory. If New Year's Day is Saturday a 
         # substitute holiday is given on 4 January by Royal Proclamation. 2 January is given by Royal Proclamation, with 
         # a substitute holiday on 4 January if it is Saturday and 3 January if it is Sunday or Monday. 
-        if self._specialDaysDict["New Year"].wd_norm == WeekDayNorm.SATURDAY or \
-           self._specialDaysDict["New Year"].wd_norm == WeekDayNorm.SUNDAY:
+        if self.getSpecialDayByName("New Year").wd_norm == WeekDayNorm.SATURDAY or \
+           self.getSpecialDayByName("New Year").wd_norm == WeekDayNorm.SUNDAY:
             
             self._addSpecialDay(SpecialDay(name="New Year observed (uk)", day= 1, mon= 1, year=self.year, incToWeekDay=WeekDayNorm.MONDAY)) 
-            secoundJan = copy.copy(self._specialDaysDict["New Year observed (uk)"]).increment(1)
+            secoundJan = copy.copy(self.getSpecialDayByName("New Year observed (uk)")).increment(1)
         else:
-            secoundJan = copy.copy(self._specialDaysDict["New Year"]).increment(1)
+            secoundJan = copy.copy(self.getSpecialDayByName("New Year")).increment(1)
         secoundJan.name = "2nd January (Scotland)"
 
         if secoundJan.wd_norm == WeekDayNorm.SATURDAY or \
@@ -203,8 +225,8 @@ class Year:
         self._addSpecialDay(secoundJan)
 
         self._addSpecialDay(SpecialDay(name="St Patrick's Day",  day=17, mon=3, year=self.year)) 
-        if self._specialDaysDict["St Patrick's Day"].wd_norm == WeekDayNorm.SATURDAY or \
-           self._specialDaysDict["St Patrick's Day"].wd_norm == WeekDayNorm.SUNDAY:
+        if self.getSpecialDayByName("St Patrick's Day").wd_norm == WeekDayNorm.SATURDAY or \
+           self.getSpecialDayByName("St Patrick's Day").wd_norm == WeekDayNorm.SUNDAY:
 
             self._addSpecialDay(SpecialDay(name="St Patrick's Day observed (ni)", day= 17, mon= 3, year=self.year, incToWeekDay=WeekDayNorm.MONDAY)) 
         self._addSpecialDay(SpecialDay(name="St. David's Day",  day=1, mon=3, year=self.year)) 
@@ -213,8 +235,8 @@ class Year:
         # no saints' day should be celebrated between Palm Sunday and the Sunday after Easter Day so if 23 April falls 
         # in that period the celebrations are transferred to after it.
         saintGeorgesDay = SpecialDay(name="Saint George's Day", day= 23, mon= 4, year=self.year)        
-        if not saintGeorgesDay < self._specialDaysDict["Palm Sunday"]:
-            while not saintGeorgesDay > self._specialDaysDict["White Sunday"]:
+        if not saintGeorgesDay < self.getSpecialDayByName("Palm Sunday"):
+            while not saintGeorgesDay > self.getSpecialDayByName("White Sunday"):
                 saintGeorgesDay.increment(1)
         self._addSpecialDay(saintGeorgesDay) 
 
@@ -253,16 +275,16 @@ class Year:
         self._addSpecialDay(SpecialDay(name="Guy Fawkes Day",                     day= 5, mon=11, year=self.year))
         self._addSpecialDay(SpecialDay(name="Remembrance Sunday",                 day= 1, mon=11, year=self.year, offset=7, incToWeekDay=WeekDayNorm.SUNDAY))
         self._addSpecialDay(SpecialDay(name="St Andrew's Day",                    day=30, mon=11, year=self.year))
-        if self._specialDaysDict["St Andrew's Day"].wd_norm == WeekDayNorm.SATURDAY or \
-           self._specialDaysDict["St Andrew's Day"].wd_norm == WeekDayNorm.SUNDAY:
+        if self.getSpecialDayByName("St Andrew's Day").wd_norm == WeekDayNorm.SATURDAY or \
+           self.getSpecialDayByName("St Andrew's Day").wd_norm == WeekDayNorm.SUNDAY:
             self._addSpecialDay(SpecialDay(name="St Andrew's Day observed (sc)",  day= 30, mon= 11, year=self.year, incToWeekDay=WeekDayNorm.MONDAY)) 
  
         # If Boxing Day falls on a Saturday, the following Monday is a substitute bank holiday. 
         # If Christmas Day falls on a Saturday, the following Monday and Tuesday are substitute bank holidays.
-        if self._specialDaysDict["First christmasday"].wd_norm == WeekDayNorm.SATURDAY:
+        if self.getSpecialDayByName("First christmasday").wd_norm == WeekDayNorm.SATURDAY:
             self._addSpecialDay(SpecialDay(name="Christmas Day observed (uk)",    day= 25, mon= 12, year=self.year, incToWeekDay=WeekDayNorm.MONDAY)) 
             self._addSpecialDay(SpecialDay(name="Boxing Day observed (uk)",       day= 25, mon= 12, year=self.year, incToWeekDay=WeekDayNorm.TUESDAY)) 
-        elif self._specialDaysDict["Second christmasday"].wd_norm == WeekDayNorm.SATURDAY:
+        elif self.getSpecialDayByName("Second christmasday").wd_norm == WeekDayNorm.SATURDAY:
             self._addSpecialDay(SpecialDay(name="Boxing Day observed (uk)",       day= 25, mon= 12, year=self.year, incToWeekDay=WeekDayNorm.MONDAY)) 
 
         self._addSpecialDay(SpecialDay(name="Birthday of Martin Luther King, Jr", day=15, mon= 1, year=self.year, incToWeekDay=WeekDayNorm.MONDAY))
@@ -271,9 +293,9 @@ class Year:
 
         # If July 4 is a Saturday, it is observed on Friday, July 3. If July 4 is a Sunday, it is observed on Monday, July 5
         self._addSpecialDay(SpecialDay(name="US Independence Day",                day= 4, mon= 7, year=self.year))
-        if self._specialDaysDict["US Independence Day"].wd_norm == WeekDayNorm.SATURDAY:
+        if self.getSpecialDayByName("US Independence Day").wd_norm == WeekDayNorm.SATURDAY:
             self._addSpecialDay(SpecialDay(name="US Independence Day observed",   day= 4, mon= 7, year=self.year, offset=-1)) 
-        if self._specialDaysDict["US Independence Day"].wd_norm == WeekDayNorm.SUNDAY:
+        if self.getSpecialDayByName("US Independence Day").wd_norm == WeekDayNorm.SUNDAY:
             self._addSpecialDay(SpecialDay(name="US Independence Day observed",   day= 4, mon= 7, year=self.year, offset=1)) 
 
         self._addSpecialDay(SpecialDay(name="Labor Day (us)",                     day= 1, mon= 9, year=self.year, incToWeekDay=WeekDayNorm.MONDAY))
@@ -281,30 +303,37 @@ class Year:
 
         # If Veterans Day falls on a Saturday, they are closed on Friday November 10. If Veterans Day falls on a Sunday, they are closed on Monday November 12.
         self._addSpecialDay(SpecialDay(name="Veterans Day (us)",                  day=11, mon=11, year=self.year))
-        if self._specialDaysDict["Veterans Day (us)"].wd_norm == WeekDayNorm.SATURDAY:
+        if self.getSpecialDayByName("Veterans Day (us)").wd_norm == WeekDayNorm.SATURDAY:
             self._addSpecialDay(SpecialDay(name="Veterans Day (us) observed",     day=11, mon=11, year=self.year, offset=-1)) 
-        if self._specialDaysDict["Veterans Day (us)"].wd_norm == WeekDayNorm.SUNDAY:
+        if self.getSpecialDayByName("Veterans Day (us)").wd_norm == WeekDayNorm.SUNDAY:
             self._addSpecialDay(SpecialDay(name="Veterans Day (us) observed",     day=11, mon=11, year=self.year, offset=1)) 
 
         self._addSpecialDay(SpecialDay(name="Thanksgiving (us)",                  day=22, mon=11, year=self.year, incToWeekDay=WeekDayNorm.THURSDAY))
         self._addSpecialDay(SpecialDay(name="Juneteenth (us)",                    day=19, mon= 6, year=self.year))
  
     def specialDayList(self, day, mon):
-        retval = list()
-        # TODO Change dictionary structure so we don't have so search so much - use date as key?
-        for key, sDay in self._specialDaysDict.items():
-            if sDay.day == day and sDay.mon == mon:
-                retval.append(sDay)
 
-        return retval
+        d = Day(day, mon, self.year)
+        if d.dateKey in self._specialDaysDict:
+            return self._specialDaysDict[d.dateKey]
+        else:
+            return list()
 
     def specialDayType(self, day, mon):
+
+        li = self.specialDayList(day, mon)
         retval = 0
-        for key, sDay in self._specialDaysDict.items():
-            if sDay.day == day and sDay.mon == mon:
-                retval = max(retval, sDay.type)
+        for d in li:
+            retval = max(retval, d.type)
 
         return retval
+
+    def getSpecialDayByName(self, name):
+
+        for sDayList in self._specialDaysDict.values():
+            for sDay in sDayList:
+                if sDay._name == name:
+                    return sDay
 
 class Day:
     """
@@ -394,6 +423,12 @@ class Day:
         return self
 
     @property
+    def dateKey(self):
+        """ Unique identifier for a date in a year
+        """
+        return self.mon * 100 + self.day
+    
+    @property
     def year(self):
         return self.yh * 100 + self.ys
 
@@ -479,7 +514,7 @@ class SpecialDay(Day):
         if self.type == SpecialDayType.HOLIDAY:
             dtype = "holiday"
  
-        return f'{cfg.WEEK_DAYS.get(self.wd_norm)} - {self.day}.{self.mon}.{self.year}{self.ys} - {self.name} - {dtype}' 
+        return f'{self.weekdayShort} {self.day}.{self.mon}.{self.year} - {self.name} - {dtype}' 
 
     @property
     def name(self):

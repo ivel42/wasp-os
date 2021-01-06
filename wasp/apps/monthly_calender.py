@@ -74,6 +74,7 @@ class MonthlyCalenderApp():
         self._draw()
         wasp.system.request_event(wasp.EventMask.TOUCH |
                                   wasp.EventMask.SWIPE_UPDOWN)
+    
     def tick(self, ticks):
         """Periodic callback.
         
@@ -185,7 +186,6 @@ class MonthlyCalenderApp():
         line = 0
         tab = 0
  
-        y = greg_cal.Year(self.year) 
         s = f'{greg_cal.cfg.MONTH_NAMES[self.mon]} {self.year}'
         draw.string(s, self.tc[0]+self.tc[1]*tab, self.lc[0]+self.lc[1]*line, width=240)
         line += 1
@@ -201,13 +201,14 @@ class MonthlyCalenderApp():
         
         self.lut.clear()
         d = greg_cal.Day(1, self.mon, self.year)
+        tmp = greg_cal.Year(self.year) 
         while d.mon == self.mon:
             draw.set_color(hi)
             draw.string(f'{d.cw}', self.tc[0]+self.tc[1]*tab, self.lc[0]+self.lc[1]*line)
             tab += 1
             tab += d.wd_norm
             while d.mon == self.mon:
-                dType = y.specialDayType(d.day, d.mon)
+                dType = tmp.specialDayType(d.day, d.mon)
                 if dType == greg_cal.SpecialDayType.HOLIDAY: 
                     draw.set_color(greg_cal.dayColors['holiday'])
                 elif dType == greg_cal.SpecialDayType.INFO_DAY: 

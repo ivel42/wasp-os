@@ -98,7 +98,7 @@ def checkMoCw1(calYear, day, mon, year):
     elif test.day != day or test.mon != mon:
         logging.error('wrong day! - ' + str(test))
     else:
-        logging.info('MoCw1 right for calender year ' + str(calYear))
+        logging.info('MoCw1 right for calender year ' + str(calYear.year))
 
 def checkSpecialDay(year, day, mon, name ):
 
@@ -148,8 +148,7 @@ def main():
 
     year = Year(2020)
 
-    for key, value in year._specialDaysDict.items():
-        print(key + ' | ' + str(value))
+    print(year)
 
   
     # test 2019
