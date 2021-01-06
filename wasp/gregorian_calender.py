@@ -468,6 +468,8 @@ class SpecialDay(Day):
             self.incToWeekDay(incToWeekDay)
 
     def __str__(self):
+        """ Representation of this instance as string
+        """
         dtype = ''
         if self.type == SpecialDayType.IGNORE:
             dtype = "ignored"
@@ -480,6 +482,8 @@ class SpecialDay(Day):
 
     @property
     def name(self):
+        """ Get the name - will always be the translation - only the key in the dictionary if no translation there!
+        """
         if self._name in cfg.TRANSLATE_DAY:
             return(cfg.TRANSLATE_DAY[self._name]['name'])
         else:
@@ -487,30 +491,33 @@ class SpecialDay(Day):
 
     @name.setter
     def name(self, name):
+        """ Set the name - will always be the key in the dictionary - not the translation!
+        """
         self._name = name
 
     @property
     def type(self):
+        """ Get the SpecialDayType
+        """
         if self._name in cfg.TRANSLATE_DAY:
             return(cfg.TRANSLATE_DAY[self._name]['type'])
         else:
             return SpecialDayType.IGNORE
 
 def getEaster(yh, ys):
-
-    # Berechnung nach Christian Zeller
-    
+    """ Calculation of the Easter date from Christian Zeller
+    """
     a = (5 * yh + ys) % 19
     g = yh - int(yh / 4) - int(((8 * yh) + 13) / 25)
     b = ((19 * a) + 15 + g) % 30
     d = (b + ys + int(ys/4) + int(yh/4) + 2 - (2 * yh)) % 7
     d = d + 7 if ( d < 0 ) else d
-    # Sonderfallbehandlung
+    # Special case
     if( ((d == 0) and (b == 29)) or ((d == 0) and (b == 28) and (a > 10)) ):
         d = 7
     daysAfter21M = b + 7 - int(d)
     
-    # Obige Formeln bestimmen wieviele Tage Ostersonntag nach dem 21.3 ist
+    # Above formula gives the number of days between Easter and 21.3
     year = yh * 100 + ys
     easter = Day(21, 3, year)
     easter.increment(daysAfter21M)
@@ -518,37 +525,40 @@ def getEaster(yh, ys):
     return easter
 
 def getMoCw1(year):
+    """ Get Monday of calender week 1
+    """
     tmp = Day( 1,  1, year) # needed for Calender week - ISO 8601
     tmp.incToWeekDay(WeekDayNorm.THURSDAY) # Thursday is always CW 1
     tmp.decrement(3) # now tmp is Monday CW1
     return tmp
 
 def getDaysPerMonth(mon, yh, ys):
-
     if not (mon == 2):
         d = DAYS_PER_MONTH.get(mon)
     else:
-        if((ys % 4) == 0): # wenn das jahr durch 4 teilbar ist schaltjahr
+        if((ys % 4) == 0): # if year is dividable by 4 it's leap year
             d = 29
-            if(ys == 0): # außer volles yh
+            if(ys == 0):   # except full yh
                 d = 28
-                if((yh % 4) == 0): # ausnahme der ausnahme: yh durch 4 teilbar
+                if((yh % 4) == 0): #  exception of exception: yh dividable by 4
                     d = 29
         else:
             d = 28
     return d
 
 def convertZellerWdToNormWd(zellerWd):
-    # from weekDay in format  Sa: 0, So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6
-    # to WeekDayNorm()                      Mo: 0, Di: 1, Mi: 2, Do: 3, Fr: 4, Sa: 5, So: 6,
+    """ from weekDay in format  Sa: 0, So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6
+        to WeekDayNorm()                      Mo: 0, Di: 1, Mi: 2, Do: 3, Fr: 4, Sa: 5, So: 6,
+    """
     wd = zellerWd
     wd = wd + 7 if wd < 2 else wd 
     wd -= 2
     return wd    
 
 def convertNormWdToZellerWd(normWd):
-    # from WeekDayNorm():                 Mo: 0, Di: 1, Mi: 2, Do: 3, Fr: 4, Sa: 5, So: 6,
-    # to weekDay in format  Sa: 0, So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6
+    """ from WeekDayNorm():                 Mo: 0, Di: 1, Mi: 2, Do: 3, Fr: 4, Sa: 5, So: 6,
+        to weekDay in format  Sa: 0, So: 1, Mo: 2, Di: 3, Mi: 4, Do: 5, Fr: 6
+    """
     wd = normWd
     wd += 2
     wd = wd + 7 if wd > 6 else wd 
