@@ -291,6 +291,7 @@ class Year:
  
     def specialDayList(self, day, mon):
         retval = list()
+        # TODO Change dictionary structure so we don't have so search so much - use date as key?
         for key, sDay in self._specialDaysDict.items():
             if sDay.day == day and sDay.mon == mon:
                 retval.append(sDay)
