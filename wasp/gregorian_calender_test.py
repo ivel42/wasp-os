@@ -102,7 +102,7 @@ def checkMoCw1(calYear, day, mon, year):
 
 def checkSpecialDay(year, day, mon, name ):
 
-    tmp = year.isSpecialDay(day,mon)
+    tmp = year.specialDayList(day,mon)
     if len(tmp) == 0:
         logging.error('date not found for ' + name)
     else:

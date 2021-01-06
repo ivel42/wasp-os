@@ -40,7 +40,7 @@ import gregorian_calender as greg_cal
 class MonthlyCalenderApp():
     """A perpetual calender app for wasp-os.
     """
-    
+
     NAME = "Monthly Calender"
 
     def __init__(self):
@@ -140,7 +140,7 @@ class MonthlyCalenderApp():
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
         draw.set_font(fonts.sansMono18)
-        tmp = greg_cal.Year(self.year).isSpecialDay(self.dDay, self.mon)
+        tmp = greg_cal.Year(self.year).specialDayList(self.dDay, self.mon)
         if len(tmp) < 2:
             wasp.system.request_tick(60000)
         else:

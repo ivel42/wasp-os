@@ -168,7 +168,7 @@ class ClockApp():
 
         draw.fill(x=0, y=190, w=240, h=240-190) 
         draw.set_font(fonts.sansMono18)
-        tmp = greg_cal.Year(self._year).isSpecialDay(d.day, d.mon)
+        tmp = greg_cal.Year(self._year).specialDayList(d.day, d.mon)
         if len(tmp) < 2:
             self._tickDivider = 60
         else:
