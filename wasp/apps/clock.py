@@ -5,12 +5,19 @@
 ~~~~~~~~~~~~~~~~
 
 Shows a time (as HH:MM) together with a battery meter and the date.
+
+The second line consists of (CW WD DD.MM.YYYY):
+
+- CW: Calender week
+- WD: Short weekday
+- DD.MM.YYYY: Date
+
+The next lines show the name of the special day. The color encodes the 
+type of the day. See gregorian_calender.py dayColors.
+
 """
 
 import wasp
-
-#from wasp import watch.drawable as draw
-
 import icons
 import fonts
 import fonts.clock as digits
@@ -30,6 +37,7 @@ class ClockApp():
         :width: 179
 
         Screenshot of the clock application
+    
     """
     NAME = 'Clock'
     ICON = icons.clock
@@ -110,7 +118,7 @@ class ClockApp():
         # then we compare the minute on display to make sure we 
         # only update the main clock once per minute.
         now = wasp.system.bar.update()
-        
+         
         if now and (redraw or (self._day != now[2])):
             # Record the day that is currently being displayed
             self._clear()

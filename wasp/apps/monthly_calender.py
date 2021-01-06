@@ -1,34 +1,97 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2021 Andreas Lefevre
 
+"""Monthly calender
+~~~~~~~~~~~~~~~~~~~
+
+An application to show an Perpetual Calendar.
+
+    .. figure:: res/MonthlyCalenderApp.png
+        :width: 179
+
+        Screenshot of the Calender Application
+
+**Display Sections**
+
+*Selected Month*:
+    The first line shows the displayed month and year.
+
+*Calender*:
+    Displays the selected month. The color encodes the 
+    type of the day. See gregorian_calender.py dayColors.
+
+*Special Day Info*:
+    The next lines show the name of the selected special day.
+
+**Controls**
+
+Touch on a day in the *Calender*: 
+    Select that date for the *Special Day Info*.
+
+Swipe up/down: 
+    Change the displayed month on the *Calender*.
+
+"""
+
 import wasp
 import fonts
 import gregorian_calender as greg_cal
 
 class MonthlyCalenderApp():
-    """A calender app for wasp-os."""
+    """A perpetual calender app for wasp-os.
+    """
+    
     NAME = "Monthly Calender"
 
     def __init__(self):
+        """ Initialize instance variables
+        """
+
+        # get the current time time to use it
+        # as starting point
         now = wasp.watch.rtc.get_localtime()
         self.year = now[0]
         self.mon = now[1]
-        self.lut = dict()
-        self.lc = [ 0, 24] # lineOffset, lineInc
-        self.tc = [10, 29] # tabOffset, tabInc
         self.dDay = now[2]
+
+        # index of the *Special Day Info* 
+        # needed if there is more than one special day per day
         self.dDayIdx = 0
 
+        # look up table to remember line and colum of each day
+        self.lut = dict()
+
+        # line and column definition
+        self.lc = [ 0, 24] # lineOffset, lineInc
+        self.tc = [10, 29] # tabOffset, tabInc
+
     def foreground(self):
+        """Activate the application.
+        
+        - Request touch and swipe
+        - Draw everything
+        """
         self._draw()
         wasp.system.request_event(wasp.EventMask.TOUCH |
                                   wasp.EventMask.SWIPE_UPDOWN)
     def tick(self, ticks):
-        """Periodic callback to update the display day."""
+        """Periodic callback.
+        
+        - Draw *Special Day Info*
+        """
         self.dDayIdx += 1
         self._updateDisplayDay()
 
     def swipe(self, event):
+        """Swipe callback.
+        
+        up:
+            Increment month to be displayed
+        down:
+            Increment month to be displayed
+
+        - Draw everything
+        """
         if event[0] == wasp.EventType.UP:
             if self.mon < 12:
                 self.mon += 1
@@ -44,6 +107,11 @@ class MonthlyCalenderApp():
         self._draw()
 
     def touch(self, event):
+        """Touch callback.
+        
+        - Find the day that was touched
+        - Draw *Special Day Info*
+        """
         x = event[1]
         y = event[2]
 
@@ -58,6 +126,13 @@ class MonthlyCalenderApp():
         self._updateDisplayDay()
 
     def _updateDisplayDay(self):
+        """Draw *Special Day Info*
+        
+        - Clear this part of the display
+        - Get a list of the special days
+        - Request faster tick to toggle special days when there is more than one
+        - Draw the name of the day in the right color
+        """
         draw = wasp.watch.drawable
         hi =  wasp.system.theme('bright')
         lo =  wasp.system.theme('mid')
@@ -91,6 +166,13 @@ class MonthlyCalenderApp():
                 info_line += 1
 
     def _draw(self):
+        """Draw everything
+        
+        - Clear the display
+        - Draw *Selected Month*
+        - Draw *Calender*
+        - Draw *Special Day Info*
+        """
         draw = wasp.watch.drawable
         hi =  wasp.system.theme('bright')
         lo =  wasp.system.theme('mid')

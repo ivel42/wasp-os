@@ -9,6 +9,7 @@ Shows special days.
 For calculation the calender formulas of Christian Zeller will be used.
 """
 
+# Dictionary for the number of days per month - note the missing february
 DAYS_PER_MONTH = { 1: 31,
                    3: 31,
                    4: 30,
@@ -22,6 +23,8 @@ DAYS_PER_MONTH = { 1: 31,
                   12: 31}
 
 class WeekDayNorm():
+    """ Can be used like an enumeration for weekdays 
+    """
     MONDAY    = 0
     TUESDAY   = 1
     WEDNESDAY = 2
@@ -31,10 +34,14 @@ class WeekDayNorm():
     SUNDAY    = 6
 
 class SpecialDayType():
+    """ Can be used like an enumeration for special days
+        SpecialDayType is used to declare a day important in the cfg e.g. gregorian_calender_cfg_uk.py
+    """
     IGNORE   = 0
     INFO_DAY = 1
     HOLIDAY  = 2
 
+# Dictionary for colors used by dayColors
 colors = {'white'  : 0xffff,
           'red'    : 0xf800,
           'yellow' : 0xffe0,
@@ -43,6 +50,7 @@ colors = {'white'  : 0xffff,
           'blue'   : 0xffff,
           'magenta': 0xf81f}
 
+# Defines a color for an *Special Day*
 dayColors = {'sunday'  : colors['red'],
              'holiday' : colors['magenta'],
              'infoday' : colors['cyan']}
