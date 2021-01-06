@@ -150,7 +150,6 @@ def main():
 
     print(year)
 
-  
     # test 2019
     year = Year(2019) 
     checkSpecialDay(year, 21,  1, "Birthday of Martin Luther King, Jr")
